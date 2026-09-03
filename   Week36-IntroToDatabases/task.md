@@ -77,7 +77,7 @@ If you used **SQL Shell (psql)** instead, you can skip `--version` and go straig
 
 Take a screenshot of `psql --version` output (or of a successful `psql` connection prompt).
 
-https://i.ibb.co/dsZTqK47/Screenshot-2026-09-03-at-15-16-09.png
+![Screenshot](https://i.ibb.co/dsZTqK47/Screenshot-2026-09-03-at-15-16-09.png)
 
 ---
 
