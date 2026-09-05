@@ -208,8 +208,9 @@ Answer the following in your own words (write 2–3 sentences per point):
 
 > [!NOTE]
 > ***Your Answer***
->
-> _(Write your answer here.)_
+> * Data would be impossible to manage as it would require to always manually update spreadshet
+> * It will have significant latence as the more data will appear excel and other related software will be having a hard time displaying it
+> * It will take much more longer time for everyone to work as everyone will have to update their spreadshet file versions to match recent changes
 
 2. List **3 benefits** of switching to a database system, explaining how each one solves a problem from your list above.
 
