@@ -243,7 +243,7 @@ _(See Section 1 of this week's Theory material.)_
 > [!NOTE]
 > ***Your Answer***
 >
-> _(Write your answer here.)_
+> Data is just raw,unprocessed facts that does not have any much of meaning and we can't really do much with it. Information on the other hand have context,meaning and structure ,which allows us to work with it.
 
 **Q2.** List and explain three disadvantages of file-based data management systems. For each, describe how it would affect TrailShop specifically.
 _(See Section 2 of this week's Theory material.)_
