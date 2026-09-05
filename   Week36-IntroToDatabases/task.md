@@ -208,25 +208,27 @@ Answer the following in your own words (write 2–3 sentences per point):
 
 > [!NOTE]
 > ***Your Answer***
-> * Data would be impossible to manage as it would require to always manually update spreadshet
-> * It will have significant latence as the more data will appear excel and other related software will be having a hard time displaying it
-> * It will take much more longer time for everyone to work as everyone will have to update their spreadshet file versions to match recent changes
+> * Data inconsistence as there is no data validation or rules build inside data files.
+> * Zero security as anyone in the company can see and edit any data.
+> * Data loss as if more when one user tries to make changes only the user who saved file first get he's changes uploaded.
 
 2. List **3 benefits** of switching to a database system, explaining how each one solves a problem from your list above.
 
 > [!NOTE]
 > ***Your Answer***
-> * It would be much to update data as it will only be required to push all the changes to one source (database)
-> * Analysing and manipulating data would be much easier as databases can handle larger amounts of data and can process complex queries easaly
-> * Every staff person would have same data as everyone will be connecting and using same data source (database)
+> * Database allow to add data validation and constraints for columns
+> * Database allow to create user,roles and permissions for working with data
+> * Database allow to do any crud operations in real time for multiple users
 
 3. Explain the three-schema architecture in your own words. Why is the separation into three levels useful?
 
 > [!NOTE]
 > ***Your Answer***
+> It is a concept of separating database into a 3 levels of abstraction:
+> 1. First level is external level ,which allows to create roles,users and permissions for database.
+> 2. Second level is conceptual level ,which explains whole database logical structure(indexes,relations,constrains).
+> 3. Third level is internal level ,which explains how the actual data is stored inside physical storage.
 >
-> _(Write your answer here.)_
-
 ---
 
 ## Part 2: Theory Review Questions
