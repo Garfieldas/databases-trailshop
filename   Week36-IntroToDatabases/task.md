@@ -181,6 +181,8 @@ Expected: one row with `trailshop`.
 
 Take a screenshot showing:
 
+![Screenshot](https://i.ibb.co/C5gr5x9k/Screenshot-2026-09-05-at-23-23-47.png)
+
 - successful `\c trailshop` (or the `trailshop=#` prompt), **and**
 - `\dt` with an empty result / “Did not find any relations”
 
