@@ -219,7 +219,6 @@ Answer the following in your own words (write 2–3 sentences per point):
 > * It would be much to update data as it will only be required to push all the changes to one source (database)
 > * Analysing and manipulating data would be much easier as databases can handle larger amounts of data and can process complex queries easaly
 > * Every staff person would have same data as everyone will be connecting and using same data source (database)
-> _(Write your answer here.)_
 
 3. Explain the three-schema architecture in your own words. Why is the separation into three levels useful?
 
