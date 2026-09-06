@@ -207,7 +207,7 @@ Answer the following in your own words (write 2–3 sentences per point):
 1. List **3 specific problems** TrailShop would face if they kept using spreadsheets as their product catalog grows to 5,000+ items with 10 staff members.
 
 > [!NOTE]
-> ***Your Answer***
+>
 > * Data inconsistence as there is no data validation or rules build inside data files.
 > * Zero security as anyone in the company can see and edit any data.
 > * Data loss as if more when one user tries to make changes only the user who saved file first get he's changes uploaded.
@@ -215,7 +215,7 @@ Answer the following in your own words (write 2–3 sentences per point):
 2. List **3 benefits** of switching to a database system, explaining how each one solves a problem from your list above.
 
 > [!NOTE]
-> ***Your Answer***
+>
 > * Database allow to add data validation and constraints for columns
 > * Database allow to create user,roles and permissions for working with data
 > * Database allow to do any crud operations in real time for multiple users
@@ -223,7 +223,7 @@ Answer the following in your own words (write 2–3 sentences per point):
 3. Explain the three-schema architecture in your own words. Why is the separation into three levels useful?
 
 > [!NOTE]
-> ***Your Answer***
+>
 > It is a concept of separating database into a 3 levels of abstraction:
 > 1. First level is external level ,which allows to create roles,users and permissions for database.
 > 2. Second level is conceptual level ,which explains whole database logical structure(indexes,relations,constrains).
@@ -241,7 +241,7 @@ Answer each question in 2–4 sentences. Reference the Theory material sections 
 _(See Section 1 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > Data is just raw,unprocessed facts that does not have any much of meaning and we can't really do much with it. Information on the other hand have context,meaning and structure ,which allows us to work with it.
 
@@ -249,17 +249,17 @@ _(See Section 1 of this week's Theory material.)_
 _(See Section 2 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 > 1. Data redundancy and inconsistency as spreadsheets do not provide any data validations or constrains so TrailShop would face a problem of duplicated,blank or wrong data
 2. Data is spread across multiple files so it requires much more time for Trailshop to retrieve and manipulate it.
 3. Any user can edit or write any data on a files,which could lead to human erros as for example marketing team could accidentaly change item price for Trailshop product.
-> _(Write your answer here.)_
+>
 
 **Q3.** What is a DBMS? List four of its core functions.
 _(See Sections 3 and 4 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > DBMS is a database management system.
 > 1. DBMS provides a data definition language DDL for defining the structure of the database.
@@ -279,7 +279,7 @@ _(See Section 5.2 of this week's Theory material.)_
 _(See Section 8 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > Metadata is data about data. For example products table name "products" is metadata as it provides us the information that this table name exits. Column name price and type NUMERIC(10, 2) is also a metadata as it provides as an information that price column stores decimal numbers up to 10 digits, 2 after decimal point.
 
@@ -287,7 +287,7 @@ _(See Section 8 of this week's Theory material.)_
 _(See Section 3.3 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > Three-schema architecture is a way of abstracting database into 3 levels of abstraction.
 > 1. First level is external level ,which describes users permissions,roles
@@ -298,14 +298,14 @@ _(See Section 3.3 of this week's Theory material.)_
 _(See Section 3.4 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 > Logical data independence is about changing database structure without effecting program. Physical data independence is about moving database to a diferent disk or server without doing any changes to a logical part of database.
 
 **Q8.** What is a transaction? Why is atomicity important? Give a TrailShop example.
 _(See Section 5.5 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > A transaction is a unit of work that must complete entirely or not at all. Atomicity is important so that if any for example product purchase steps fail we at least have correct data as for example correct current stock.
 
@@ -320,7 +320,7 @@ For each statement, write **True** or **False** and correct any false statements
 5. The conceptual level of the three-schema architecture describes how data is physically stored on disk.
 
 > [!NOTE]
-> ***Your Answer***
+>
 > 1. False DBMS is a database management system. It does not store anything it just lets you manage database.
 > 2. True
 > 3. True
@@ -360,7 +360,7 @@ Match each term (1–10) with its definition (A–J).
 | J      | Atomicity, Consistency, Isolation, Durability — properties of reliable transactions |
 
 > [!NOTE]
-> ***Your Answers***
+>
 >
 > | #   | Your Match |
 > | --- | ---------- |
@@ -439,7 +439,7 @@ WHERE table_schema = 'public';
 Why does the last query return no rows? What would you expect to see after creating tables in future weeks?
 
 > [!NOTE]
-> ***Your Answer***
+>
 > It returned no rows ,because at the current moment trailshop has no tables created. I guess in future it would return publicly available tables.
 >
 
@@ -469,8 +469,8 @@ DROP DATABASE test_playground;
 
 ## Submission Checklist
 
-- [ ] PostgreSQL installed and working (screenshot of `psql --version` or equivalent)
-- [ ] `trailshop` database created (screenshot of `\c trailshop` showing successful connection)
-- [ ] Reflection Worksheet answers (Part 1, Task 3)
-- [ ] Theory Review Questions answered (Part 2)
-- [ ] Practical Exercise outputs documented (Part 3)
+- [x] PostgreSQL installed and working (screenshot of `psql --version` or equivalent)
+- [x] `trailshop` database created (screenshot of `\c trailshop` showing successful connection)
+- [x] Reflection Worksheet answers (Part 1, Task 3)
+- [x] Theory Review Questions answered (Part 2)
+- [x] Practical Exercise outputs documented (Part 3)
