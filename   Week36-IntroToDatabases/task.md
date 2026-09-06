@@ -440,8 +440,8 @@ Why does the last query return no rows? What would you expect to see after creat
 
 > [!NOTE]
 > ***Your Answer***
+> It returned no rows ,because at the current moment trailshop has no tables created. I guess in future it would return publicly available tables.
 >
-> _(Write your answer here.)_
 
 ### Exercise 3.3: Create and Drop a Test Database
 
@@ -453,6 +453,7 @@ CREATE DATABASE test_playground;
 
 -- List databases to confirm it exists
 \l
+* ![Screenshot](https://i.ibb.co/32PLkrv/Screenshot-2026-09-06-at-16-30-28.png)
 
 -- Drop (delete) the test database
 DROP DATABASE test_playground;
