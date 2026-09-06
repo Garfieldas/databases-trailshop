@@ -390,6 +390,8 @@ Connect to PostgreSQL using psql and complete the following. Write down the comm
    * \l 
    ![Screenshot](https://i.ibb.co/JwZG75WW/Screenshot-2026-09-06-at-15-56-14.png)
 2. Connect to the `trailshop` database.
+   * \c trailshop
+   ![Screenshot](https://i.ibb.co/b5qMgvnY/Screenshot-2026-09-06-at-16-04-16.png)
 3. List all tables in the `trailshop` database.
 4. Use `\?` to display the list of psql meta-commands. Find and write down the commands for:
 
