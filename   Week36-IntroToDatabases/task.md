@@ -387,7 +387,7 @@ Connect to PostgreSQL using psql and complete the following. Write down the comm
 
 1. List all databases on your server.
    * psql postgres
-   # \l 
+   * \l 
    ![Screenshot](https://i.ibb.co/JwZG75WW/Screenshot-2026-09-06-at-15-56-14.png)
 2. Connect to the `trailshop` database.
 3. List all tables in the `trailshop` database.
