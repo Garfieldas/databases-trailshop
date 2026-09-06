@@ -313,18 +313,20 @@ _(See Section 5.5 of this week's Theory material.)_
 
 For each statement, write **True** or **False** and correct any false statements.
 
-1. A DBMS stores only data, not information about the data's structure. False
-DBMS is a database management system. It does not store anything it just lets you manage database.
-2. In a file-based system, changing the format of a data file requires updating every program that reads it. True
-3. Data redundancy means the same data is stored in multiple places. True
-4. PostgreSQL is a commercial, closed-source database system. False
-PostgreSQL is an open source daatabase system.
-5. The conceptual level of the three-schema architecture describes how data is physically stored on disk. False
-Conceptual level describes database logical structure.
+1. A DBMS stores only data, not information about the data's structure.
+2. In a file-based system, changing the format of a data file requires updating every program that reads it.
+3. Data redundancy means the same data is stored in multiple places.
+4. PostgreSQL is a commercial, closed-source database system.
+5. The conceptual level of the three-schema architecture describes how data is physically stored on disk.
 
 > [!NOTE]
 > ***Your Answer***
->
+> 1. False DBMS is a database management system. It does not store anything it just lets you manage database.
+> 2. True
+> 3. True
+> 4. False PostgreSQL is an open source database system.
+> 5. False Conceptual level describes database logical structure.
+
 > _(Write True/False and corrections for all five statements above.)_
 
 ### Matching Exercise
