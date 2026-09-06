@@ -408,6 +408,8 @@ Connect to PostgreSQL using psql and complete the following. Write down the comm
 * ![Screenshot](https://i.ibb.co/ZzcnHLtL/Screenshot-2026-09-06-at-16-19-25.png)
 
 5. Quit psql.
+* \q
+* ![Screenshot](https://i.ibb.co/SXTNS9yB/Screenshot-2026-09-06-at-16-20-44.png)
 
 > [!NOTE]
 > ***Your Answer***
