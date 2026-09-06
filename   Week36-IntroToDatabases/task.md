@@ -261,15 +261,19 @@ _(See Sections 3 and 4 of this week's Theory material.)_
 > [!NOTE]
 > ***Your Answer***
 >
-> _(Write your answer here.)_
+> DBMS is a database management system.
+> 1. DBMS provides a data definition language DDL for defining the structure of the database.
+> 2. DBMS provides a data manipulation language DML for doing crud operations and querying data.
+> 3. DBMS provides a data dictionary. A special set of tables that stores metadata ,which provides information about database structure.
+> 4. DBMS provides concurrency control. 
 
 **Q4.** Explain program-data independence with a concrete example. Why is it important?
 _(See Section 5.2 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+> In most applications database is being used to query and store data. When we decide to modify existing database table structure by adding column the whole app should work as it was before as long as queries to the database has not been updated. It is important as it allows to maintain software and expand it ,while preventing potential service breakages.
 >
-> _(Write your answer here.)_
+>
 
 **Q5.** What is metadata? Give two examples of metadata for a `products` table.
 _(See Section 8 of this week's Theory material.)_
@@ -277,7 +281,7 @@ _(See Section 8 of this week's Theory material.)_
 > [!NOTE]
 > ***Your Answer***
 >
-> _(Write your answer here.)_
+> Metadata is data about data. For example products table name "products" is metadata as it provides us the information that this table name exits. Column name price and type NUMERIC(10, 2) is also a metadata as it provides as an information that price column stores decimal numbers up to 10 digits, 2 after decimal point.
 
 **Q6.** What is the three-schema architecture? Name and briefly describe each level.
 _(See Section 3.3 of this week's Theory material.)_
@@ -285,7 +289,10 @@ _(See Section 3.3 of this week's Theory material.)_
 > [!NOTE]
 > ***Your Answer***
 >
-> _(Write your answer here.)_
+> Three-schema architecture is a way of abstracting database into 3 levels of abstraction.
+> 1. First level is external level ,which describes users permissions,roles
+> 2. Second is conceptul level ,which explains a database logical structure. Which relations database has,indexes,columns and etc.
+> 3. Third level is internal level ,which describes how actual data is stored on the physical disk storage.
 
 **Q7.** Explain the difference between logical data independence and physical data independence.
 _(See Section 3.4 of this week's Theory material.)_
