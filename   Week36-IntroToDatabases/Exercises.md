@@ -251,8 +251,8 @@ _(See Section 2 of this week's Theory material.)_
 > [!NOTE]
 >
 > 1. Data redundancy and inconsistency as spreadsheets do not provide any data validations or constrains so TrailShop would face a problem of duplicated,blank or wrong data
-2. Data is spread across multiple files so it requires much more time for Trailshop to retrieve and manipulate it.
-3. Any user can edit or write any data on a files,which could lead to human erros as for example marketing team could accidentaly change item price for Trailshop product.
+> 2. Data is spread across multiple files so it requires much more time for Trailshop to retrieve and manipulate it.
+> 3. Any user can edit or write any data on a files,which could lead to human erros as for example marketing team could accidentaly change item price for Trailshop product.
 >
 
 **Q3.** What is a DBMS? List four of its core functions.
