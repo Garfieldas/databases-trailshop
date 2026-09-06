@@ -453,7 +453,6 @@ CREATE DATABASE test_playground;
 
 -- List databases to confirm it exists
 \l
-* ![Screenshot](https://i.ibb.co/32PLkrv/Screenshot-2026-09-06-at-16-30-28.png)
 
 -- Drop (delete) the test database
 DROP DATABASE test_playground;
@@ -461,6 +460,8 @@ DROP DATABASE test_playground;
 -- List databases again to confirm it's gone
 \l
 ```
+1. ![Screenshot](https://i.ibb.co/32PLkrv/Screenshot-2026-09-06-at-16-30-28.png)
+2. ![Screenshot](https://i.ibb.co/zVYny4zb/Screenshot-2026-09-06-at-16-33-02.png)
 
 **Warning:** `DROP DATABASE` permanently deletes a database and all its data. Always double-check the database name before running this command.
 
