@@ -398,8 +398,14 @@ Connect to PostgreSQL using psql and complete the following. Write down the comm
 4. Use `\?` to display the list of psql meta-commands. Find and write down the commands for:
 
 - Describing a specific table's structure
+* \d[S+]  NAME
+* ![Screenshot](https://i.ibb.co/MqF0bpK/Screenshot-2026-09-06-at-16-17-32.png)
 - Listing all users/roles
+* \du
+* ![Screenshot](https://i.ibb.co/gL2xtSBw/Screenshot-2026-09-06-at-16-18-37.png)
 - Showing help for a specific SQL command
+*   \h [NAME]  help on syntax of SQL commands, * for all commands
+* ![Screenshot](https://i.ibb.co/ZzcnHLtL/Screenshot-2026-09-06-at-16-19-25.png)
 
 5. Quit psql.
 
