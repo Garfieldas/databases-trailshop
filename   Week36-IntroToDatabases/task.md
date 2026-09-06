@@ -412,7 +412,7 @@ Connect to PostgreSQL using psql and complete the following. Write down the comm
 * ![Screenshot](https://i.ibb.co/SXTNS9yB/Screenshot-2026-09-06-at-16-20-44.png)
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > _(Document the commands you used and summarize the output for each step.)_
 
@@ -423,15 +423,18 @@ While connected to `trailshop`, run the following queries and write down what th
 ```sql
 SELECT current_database();
 ```
+* ![Screenshot](https://i.ibb.co/r20mmwQ6/Screenshot-2026-09-06-at-16-22-08.png)
 
 ```sql
 SELECT version();
 ```
+* ![Screenshot](https://i.ibb.co/wrKhbTDV/Screenshot-2026-09-06-at-16-22-50.png)
 
 ```sql
 SELECT table_name FROM information_schema.tables
 WHERE table_schema = 'public';
 ```
+* ![Screenshot](https://i.ibb.co/YTR6kZQp/Screenshot-2026-09-06-at-16-23-36.png)
 
 Why does the last query return no rows? What would you expect to see after creating tables in future weeks?
 
