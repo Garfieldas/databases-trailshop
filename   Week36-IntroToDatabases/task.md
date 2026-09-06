@@ -299,8 +299,7 @@ _(See Section 3.4 of this week's Theory material.)_
 
 > [!NOTE]
 > ***Your Answer***
->
-> _(Write your answer here.)_
+> Logical data independence is about changing database structure without effecting program. Physical data independence is about moving database to a diferent disk or server without doing any changes to a logical part of database.
 
 **Q8.** What is a transaction? Why is atomicity important? Give a TrailShop example.
 _(See Section 5.5 of this week's Theory material.)_
@@ -308,17 +307,20 @@ _(See Section 5.5 of this week's Theory material.)_
 > [!NOTE]
 > ***Your Answer***
 >
-> _(Write your answer here.)_
+> A transaction is a unit of work that must complete entirely or not at all. Atomicity is important so that if any for example product purchase steps fail we at least have correct data as for example correct current stock.
 
 ### True/False
 
 For each statement, write **True** or **False** and correct any false statements.
 
-1. A DBMS stores only data, not information about the data's structure.
-2. In a file-based system, changing the format of a data file requires updating every program that reads it.
-3. Data redundancy means the same data is stored in multiple places.
-4. PostgreSQL is a commercial, closed-source database system.
-5. The conceptual level of the three-schema architecture describes how data is physically stored on disk.
+1. A DBMS stores only data, not information about the data's structure. False
+DBMS is a database management system. It does not store anything it just lets you manage database.
+2. In a file-based system, changing the format of a data file requires updating every program that reads it. True
+3. Data redundancy means the same data is stored in multiple places. True
+4. PostgreSQL is a commercial, closed-source database system. False
+PostgreSQL is an open source daatabase system.
+5. The conceptual level of the three-schema architecture describes how data is physically stored on disk. False
+Conceptual level describes database logical structure.
 
 > [!NOTE]
 > ***Your Answer***
