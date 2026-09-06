@@ -386,6 +386,9 @@ These exercises require a working PostgreSQL installation. See Part 1, Task 1 if
 Connect to PostgreSQL using psql and complete the following. Write down the command you used and the output (or a summary of it).
 
 1. List all databases on your server.
+   * psql postgres
+   # \l 
+   ![Screenshot](https://i.ibb.co/JwZG75WW/Screenshot-2026-09-06-at-15-56-14.png)
 2. Connect to the `trailshop` database.
 3. List all tables in the `trailshop` database.
 4. Use `\?` to display the list of psql meta-commands. Find and write down the commands for:
