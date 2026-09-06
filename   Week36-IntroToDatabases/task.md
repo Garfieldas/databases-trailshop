@@ -77,7 +77,7 @@ If you used **SQL Shell (psql)** instead, you can skip `--version` and go straig
 
 Take a screenshot of `psql --version` output (or of a successful `psql` connection prompt).
 
-https://ibb.co/7d6z62hm
+![Screenshot](https://i.ibb.co/dsZTqK47/Screenshot-2026-09-03-at-15-16-09.png)
 
 ---
 
@@ -181,6 +181,8 @@ Expected: one row with `trailshop`.
 
 Take a screenshot showing:
 
+![Screenshot](https://i.ibb.co/C5gr5x9k/Screenshot-2026-09-05-at-23-23-47.png)
+
 - successful `\c trailshop` (or the `trailshop=#` prompt), **and**
 - `\dt` with an empty result / “Did not find any relations”
 
@@ -205,24 +207,28 @@ Answer the following in your own words (write 2–3 sentences per point):
 1. List **3 specific problems** TrailShop would face if they kept using spreadsheets as their product catalog grows to 5,000+ items with 10 staff members.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+> * Data inconsistence as there is no data validation or rules build inside data files.
+> * Zero security as anyone in the company can see and edit any data.
+> * Data loss as if more when one user tries to make changes only the user who saved file first get he's changes uploaded.
 
 2. List **3 benefits** of switching to a database system, explaining how each one solves a problem from your list above.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+> * Database allow to add data validation and constraints for columns
+> * Database allow to create user,roles and permissions for working with data
+> * Database allow to do any crud operations in real time for multiple users
 
 3. Explain the three-schema architecture in your own words. Why is the separation into three levels useful?
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
-
+> It is a concept of separating database into a 3 levels of abstraction:
+> 1. First level is external level ,which allows to create roles,users and permissions for database.
+> 2. Second level is conceptual level ,which explains whole database logical structure(indexes,relations,constrains).
+> 3. Third level is internal level ,which explains how the actual data is stored inside physical storage.
+>
 ---
 
 ## Part 2: Theory Review Questions
@@ -235,65 +241,73 @@ Answer each question in 2–4 sentences. Reference the Theory material sections 
 _(See Section 1 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+>
+> Data is just raw,unprocessed facts that does not have any much of meaning and we can't really do much with it. Information on the other hand have context,meaning and structure ,which allows us to work with it.
 
 **Q2.** List and explain three disadvantages of file-based data management systems. For each, describe how it would affect TrailShop specifically.
 _(See Section 2 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+> 1. Data redundancy and inconsistency as spreadsheets do not provide any data validations or constrains so TrailShop would face a problem of duplicated,blank or wrong data
+2. Data is spread across multiple files so it requires much more time for Trailshop to retrieve and manipulate it.
+3. Any user can edit or write any data on a files,which could lead to human erros as for example marketing team could accidentaly change item price for Trailshop product.
+>
 
 **Q3.** What is a DBMS? List four of its core functions.
 _(See Sections 3 and 4 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+>
+> DBMS is a database management system.
+> 1. DBMS provides a data definition language DDL for defining the structure of the database.
+> 2. DBMS provides a data manipulation language DML for doing crud operations and querying data.
+> 3. DBMS provides a data dictionary. A special set of tables that stores metadata ,which provides information about database structure.
+> 4. DBMS provides concurrency control. 
 
 **Q4.** Explain program-data independence with a concrete example. Why is it important?
 _(See Section 5.2 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
+> In most applications database is being used to query and store data. When we decide to modify existing database table structure by adding column the whole app should work as it was before as long as queries to the database has not been updated. It is important as it allows to maintain software and expand it ,while preventing potential service breakages.
 >
-> _(Write your answer here.)_
+>
 
 **Q5.** What is metadata? Give two examples of metadata for a `products` table.
 _(See Section 8 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+>
+> Metadata is data about data. For example products table name "products" is metadata as it provides us the information that this table name exits. Column name price and type NUMERIC(10, 2) is also a metadata as it provides as an information that price column stores decimal numbers up to 10 digits, 2 after decimal point.
 
 **Q6.** What is the three-schema architecture? Name and briefly describe each level.
 _(See Section 3.3 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+>
+> Three-schema architecture is a way of abstracting database into 3 levels of abstraction.
+> 1. First level is external level ,which describes users permissions,roles
+> 2. Second is conceptul level ,which explains a database logical structure. Which relations database has,indexes,columns and etc.
+> 3. Third level is internal level ,which describes how actual data is stored on the physical disk storage.
 
 **Q7.** Explain the difference between logical data independence and physical data independence.
 _(See Section 3.4 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+> Logical data independence is about changing database structure without effecting program. Physical data independence is about moving database to a diferent disk or server without doing any changes to a logical part of database.
 
 **Q8.** What is a transaction? Why is atomicity important? Give a TrailShop example.
 _(See Section 5.5 of this week's Theory material.)_
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+>
+> A transaction is a unit of work that must complete entirely or not at all. Atomicity is important so that if any for example product purchase steps fail we at least have correct data as for example correct current stock.
 
 ### True/False
 
@@ -306,8 +320,13 @@ For each statement, write **True** or **False** and correct any false statements
 5. The conceptual level of the three-schema architecture describes how data is physically stored on disk.
 
 > [!NOTE]
-> ***Your Answer***
 >
+> 1. False DBMS is a database management system. It does not store anything it just lets you manage database.
+> 2. True
+> 3. True
+> 4. False PostgreSQL is an open source database system.
+> 5. False Conceptual level describes database logical structure.
+
 > _(Write True/False and corrections for all five statements above.)_
 
 ### Matching Exercise
@@ -341,20 +360,20 @@ Match each term (1–10) with its definition (A–J).
 | J      | Atomicity, Consistency, Isolation, Durability — properties of reliable transactions |
 
 > [!NOTE]
-> ***Your Answers***
+>
 >
 > | #   | Your Match |
 > | --- | ---------- |
-> | 1   |            |
-> | 2   |            |
-> | 3   |            |
-> | 4   |            |
-> | 5   |            |
-> | 6   |            |
-> | 7   |            |
-> | 8   |            |
-> | 9   |            |
-> | 10  |            |
+> | 1   |  F         |
+> | 2   |  H         |
+> | 3   |  B         |
+> | 4   |  A         |
+> | 5   |  C         |
+> | 6   |  G         |
+> | 7   |  D         |
+> | 8   |  E         |
+> | 9   |  I         |
+> | 10  |  J         |
 
 ---
 
@@ -367,18 +386,33 @@ These exercises require a working PostgreSQL installation. See Part 1, Task 1 if
 Connect to PostgreSQL using psql and complete the following. Write down the command you used and the output (or a summary of it).
 
 1. List all databases on your server.
+   * psql postgres
+   * \l 
+   * ![Screenshot](https://i.ibb.co/JwZG75WW/Screenshot-2026-09-06-at-15-56-14.png)
 2. Connect to the `trailshop` database.
+   * \c trailshop
+   * ![Screenshot](https://i.ibb.co/b5qMgvnY/Screenshot-2026-09-06-at-16-04-16.png)
 3. List all tables in the `trailshop` database.
+   * \dt
+   * ![Screenshot](https://i.ibb.co/1p6FSRd/Screenshot-2026-09-06-at-16-06-51.png)
 4. Use `\?` to display the list of psql meta-commands. Find and write down the commands for:
 
 - Describing a specific table's structure
+* \d[S+]  NAME
+* ![Screenshot](https://i.ibb.co/MqF0bpK/Screenshot-2026-09-06-at-16-17-32.png)
 - Listing all users/roles
+* \du
+* ![Screenshot](https://i.ibb.co/gL2xtSBw/Screenshot-2026-09-06-at-16-18-37.png)
 - Showing help for a specific SQL command
+*   \h [NAME]  help on syntax of SQL commands, * for all commands
+* ![Screenshot](https://i.ibb.co/ZzcnHLtL/Screenshot-2026-09-06-at-16-19-25.png)
 
 5. Quit psql.
+* \q
+* ![Screenshot](https://i.ibb.co/SXTNS9yB/Screenshot-2026-09-06-at-16-20-44.png)
 
 > [!NOTE]
-> ***Your Answer***
+>
 >
 > _(Document the commands you used and summarize the output for each step.)_
 
@@ -389,22 +423,25 @@ While connected to `trailshop`, run the following queries and write down what th
 ```sql
 SELECT current_database();
 ```
+* ![Screenshot](https://i.ibb.co/r20mmwQ6/Screenshot-2026-09-06-at-16-22-08.png)
 
 ```sql
 SELECT version();
 ```
+* ![Screenshot](https://i.ibb.co/wrKhbTDV/Screenshot-2026-09-06-at-16-22-50.png)
 
 ```sql
 SELECT table_name FROM information_schema.tables
 WHERE table_schema = 'public';
 ```
+* ![Screenshot](https://i.ibb.co/YTR6kZQp/Screenshot-2026-09-06-at-16-23-36.png)
 
 Why does the last query return no rows? What would you expect to see after creating tables in future weeks?
 
 > [!NOTE]
-> ***Your Answer***
 >
-> _(Write your answer here.)_
+> It returned no rows ,because at the current moment trailshop has no tables created. I guess in future it would return publicly available tables.
+>
 
 ### Exercise 3.3: Create and Drop a Test Database
 
@@ -423,6 +460,8 @@ DROP DATABASE test_playground;
 -- List databases again to confirm it's gone
 \l
 ```
+1. ![Screenshot](https://i.ibb.co/32PLkrv/Screenshot-2026-09-06-at-16-30-28.png)
+2. ![Screenshot](https://i.ibb.co/zVYny4zb/Screenshot-2026-09-06-at-16-33-02.png)
 
 **Warning:** `DROP DATABASE` permanently deletes a database and all its data. Always double-check the database name before running this command.
 
@@ -430,8 +469,8 @@ DROP DATABASE test_playground;
 
 ## Submission Checklist
 
-- [ ] PostgreSQL installed and working (screenshot of `psql --version` or equivalent)
-- [ ] `trailshop` database created (screenshot of `\c trailshop` showing successful connection)
-- [ ] Reflection Worksheet answers (Part 1, Task 3)
-- [ ] Theory Review Questions answered (Part 2)
-- [ ] Practical Exercise outputs documented (Part 3)
+- [x] PostgreSQL installed and working (screenshot of `psql --version` or equivalent)
+- [x] `trailshop` database created (screenshot of `\c trailshop` showing successful connection)
+- [x] Reflection Worksheet answers (Part 1, Task 3)
+- [x] Theory Review Questions answered (Part 2)
+- [x] Practical Exercise outputs documented (Part 3)
