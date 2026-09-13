@@ -119,13 +119,14 @@ VALUES (1001, 101, 0, 189.50);
 ```
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(For each statement A–H, write SUCCESS or FAIL and explain any violation.)*
->
->
->
->
+> A. Fail. null value in column "category_id" of relation "categories" violates not-null constraint
+> B. Succeed.
+> C. Fail. Violates constraint of products that price should be bigger then 0.
+> D. Succeed.
+> E. Succeed.
+> F. Fail. Violates products name constraint not null.
+> G. Fail. Violates products table column stock_quantity constraint that value must be bigger then 0.
+> H. Fail. Violates order_items constraint quantity that should be bigger then 0
 
 ### Task 4: Foreign Key Actions
 
