@@ -35,8 +35,7 @@ Using the `products`, `categories`, and `customers` tables shown in Section 2 of
 
 
 > [!NOTE]
-> name is not a candidate key,because products might have duplicated names
->
+> name could be a candidate key only under the assumption that no two products will ever have the same name and that name is never NULL. It would be unsuitable as a primary key ,because uniqueness assumption is fragile in reality different brands can share a name, and typos, case or whitespace differences break it. Also names can change (renaming/rebranding), while a primary key should never need to be updated.
 >
 5. Give an example of a **superkey** for the `products` table that is NOT a candidate key. Explain why it's not minimal.
 
