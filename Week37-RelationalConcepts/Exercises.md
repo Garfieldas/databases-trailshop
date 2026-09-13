@@ -51,12 +51,7 @@ Using the `products`, `categories`, and `customers` tables shown in Section 2 of
 7. Is `email` in `customers` a candidate key? What makes it different from `customer_id` as a PK choice? *(See Section 6.9 on natural vs surrogate keys.)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
+> Yes, email is a candidate key under the assumption that no two customers share the same email and that it is never NULL. The difference is that email is a natural key — it comes from real-world data and has business meaning — while customer_id is a surrogate key, an artificial auto-generated value with no business meaning. As a PK choice, customer_id is safer, because people change email addresses, emails can be typed wrong, while a surrogate id never needs to change and keeps foreign keys (for example in orders) stable even when the customer updates their email.
 >
 
 ### Task 2: Define Business Rules
