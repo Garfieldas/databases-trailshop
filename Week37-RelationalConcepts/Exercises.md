@@ -46,13 +46,7 @@ Using the `products`, `categories`, and `customers` tables shown in Section 2 of
 6. Give an example of a **composite key** using a hypothetical `order_items` table. Explain why neither column alone would be sufficient.
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
->
+> order_id alone is not a unique key, because order_id could appear multiple times. product_id is also not a unique key ,because it can appear multiple times.
 
 7. Is `email` in `customers` a candidate key? What makes it different from `customer_id` as a PK choice? *(See Section 6.9 on natural vs surrogate keys.)*
 
