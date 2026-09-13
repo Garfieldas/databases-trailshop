@@ -40,12 +40,7 @@ Using the `products`, `categories`, and `customers` tables shown in Section 2 of
 5. Give an example of a **superkey** for the `products` table that is NOT a candidate key. Explain why it's not minimal.
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
+> A superkey is any set of columns that uniquely identifies every row in the table. An example for products is {product_id, name} since product_id is already unique, adding name to it still gives a unique combination for every row. It is not a candidate key, because a candidate key must be minimal. We can remove name and {product_id} alone still identifies each row, so the extra column is redundant.
 >
 
 6. Give an example of a **composite key** using a hypothetical `order_items` table. Explain why neither column alone would be sufficient.
