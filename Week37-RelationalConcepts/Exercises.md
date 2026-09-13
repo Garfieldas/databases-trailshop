@@ -72,13 +72,13 @@ Example:
 Think about rules for customers, orders, and categories — not just products.
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(List your 5 business rules with constraint types, table/column, and SQL syntax.)*
->
->
->
->
+> | Business Rule | Constraint Type | Table.Column | SQL |
+> |---|---|---|---|
+> | Every customer must have a unique (and non-null) email address | UNIQUE + NOT NULL | customers.email | email VARCHAR(255) NOT NULL UNIQUE |
+> | Category names must be unique — no duplicated category values | UNIQUE + NOT NULL | categories.category_name | category_name VARCHAR(100) NOT NULL UNIQUE |
+> | Every order must belong to an existing customer | FOREIGN KEY | orders.customer_id | FOREIGN KEY (customer_id) REFERENCES customers(customer_id) |
+> | An order line must contain at least 1 item of the product | CHECK | order_items.quantity | CHECK (quantity > 0) |
+> | Every order must have an order date, defaulting to today | NOT NULL + DEFAULT | orders.order_date | order_date DATE NOT NULL DEFAULT CURRENT_DATE |
 
 ### Task 3: Integrity Violations
 
