@@ -363,7 +363,6 @@ For each statement below, predict: **SUCCESS** or **FAIL**? If fail, name the vi
 ```sql
 -- 1
 INSERT INTO employees VALUES (102, 'Carol', 70000, 1);
-
 -- 2
 INSERT INTO employees VALUES (103, 'Dan', -5000, 1);
 
@@ -385,6 +384,15 @@ DELETE FROM departments WHERE dept_id = 1;
 -- 8
 INSERT INTO employees VALUES (106, 'Grace', 0, 2);
 ```
+
+1. **SUCCESS**
+2. **FAIL** ERROR:  new row for relation "employees" violates check constraint "employees_salary_check"
+3. **FAIL** ERROR:  duplicate key value violates unique constraint "employees_pkey"
+4. **FAIL** ERROR:  insert or update on table "employees" violates foreign key constraint "employees_dept_id_fkey"
+5. **FAIL** ERROR:  duplicate key value violates unique constraint "departments_dept_name_key"
+6. **FAIL** ERROR:  null value in column "name" of relation "employees" violates not-null constraint
+7. **FAIL** ERROR:  update or delete on table "departments" violates foreign key constraint "employees_dept_id_fkey" on table "employees"
+8. **SUCESS**
 
 ### Exercise 3.2: Write the Constraints
 
