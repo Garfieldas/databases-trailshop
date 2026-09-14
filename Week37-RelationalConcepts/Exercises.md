@@ -392,7 +392,7 @@ INSERT INTO employees VALUES (106, 'Grace', 0, 2);
 5. **FAIL** ERROR:  duplicate key value violates unique constraint "departments_dept_name_key"
 6. **FAIL** ERROR:  null value in column "name" of relation "employees" violates not-null constraint
 7. **FAIL** ERROR:  update or delete on table "departments" violates foreign key constraint "employees_dept_id_fkey" on table "employees"
-8. **SUCESS**
+8. **SUCCESS**
 
 ### Exercise 3.2: Write the Constraints
 
@@ -405,6 +405,38 @@ Given these business rules for a **bookstore database**, write the `CREATE TABLE
 5. Publication year must be between 1450 and the current year.
 
 *(Hint: you'll need at least 4 tables, including a junction table for the M:N relationship.)*
+
+> [!NOTE]
+>
+> 4 tables: `genres` and `authors` are standalone; `books` references `genres` (rule 4: exactly one genre per book, so `genre_id` is `NOT NULL`); and the junction table `book_authors` implements the M:N relationship from rule 3 using a composite primary key. `isbn` is the natural primary key of `books` — unique and never null by rule 1.
+
+```sql
+CREATE TABLE genres (
+    genre_id   INTEGER      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    genre_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE authors (
+    author_id  INTEGER      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name  VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE books (
+    isbn             VARCHAR(13)   PRIMARY KEY CHECK (LENGTH(isbn) = 13),
+    title            VARCHAR(255)  NOT NULL,
+    price            NUMERIC(10,2) NOT NULL CHECK (price > 0),
+    publication_year INTEGER       NOT NULL
+                                   CHECK (publication_year BETWEEN 1450 AND EXTRACT(YEAR FROM CURRENT_DATE)),
+    genre_id         INTEGER       NOT NULL REFERENCES genres(genre_id)
+);
+
+CREATE TABLE book_authors (
+    book_id   VARCHAR(13) NOT NULL REFERENCES books(isbn) ON DELETE CASCADE,
+    author_id INTEGER     NOT NULL REFERENCES authors(author_id) ON DELETE CASCADE,
+    PRIMARY KEY (book_id, author_id)
+);
+```
 
 ---
 
@@ -431,23 +463,108 @@ A small public library needs a database. Here is a description of their requirem
 
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
+> **1. Tables and their columns**
 >
+> - `genres` — genre_id, genre_name
+> - `books` — isbn, title, publication_year, genre_id
+> - `copies` — copy_id, barcode, book_id
+> - `members` — member_id, member_number, name, email, phone
+> - `borrowings` — borrowing_id, copy_id, member_id, borrow_date, due_date, return_date
 >
+> **2. Primary keys — surrogate or natural?**
 >
+> - `genres.genre_id` — surrogate. Auto-generated id with no business meaning; the name is the real identifier, but names can be edited, so a stable id is safer.
+> - `books.isbn` — natural. ISBN is unique and never null by the ISBN standard and never changes, so the real-world identifier can serve directly as the PK.
+> - `copies.copy_id` — surrogate. The barcode is the natural key, but stickers can be replaced or damaged; an internal id keeps the foreign keys in `borrowings` stable.
+> - `members.member_id` — surrogate. `member_number` is natural (library-issued), but kept as an alternate key — if the library ever changes its numbering scheme, the PK and all FKs survive unchanged.
+> - `borrowings.borrowing_id` — surrogate. The natural candidate would be (copy_id, borrow_date), but a surrogate id is simpler to reference and doesn't depend on the borrow date staying correct.
+>
+> **3. Foreign keys**
+>
+> | FK column | References |
+> |---|---|
+> | books.genre_id | genres(genre_id) |
+> | copies.book_id | books(isbn) |
+> | borrowings.copy_id | copies(copy_id) |
+> | borrowings.member_id | members(member_id) |
+>
+> **4. Candidate keys beyond the PK (alternate keys)**
+>
+> - `copies.barcode` — every copy has a unique barcode sticker
+> - `members.member_number` — unique library-issued number
+> - `members.email` — unique under the assumption that one email = one member (that assumption must actually hold)
+> - `genres.genre_name` — unique genre name
+> - `borrowings` (copy_id, borrow_date) — the same copy can't be handed out twice on the same day
+>
+> **5. Business rules → constraints**
+>
+> | Rule from the description | Constraint type | Where |
+> |---|---|---|
+> | Every book has an ISBN, a title, a publication year | PRIMARY KEY (isbn) + NOT NULL | books |
+> | Each book belongs to exactly one genre | FOREIGN KEY + NOT NULL | books.genre_id |
+> | Each copy has a unique barcode | UNIQUE + NOT NULL | copies.barcode |
+> | Every member has a member number, name, email, phone | UNIQUE + NOT NULL | members |
+> | Due date is always 14 days after the borrow date | CHECK (due_date = borrow_date + 14) | borrowings |
+> | return_date is NULL until the copy is returned | nullable column (no constraint needed) | borrowings.return_date |
+> | A member can borrow at most 5 copies at any given time | NOT enforceable with simple constraints — it depends on other rows, so it needs a trigger or application logic | borrowings |
+> | A copy cannot be borrowed while it's not returned (return_date IS NULL) | NOT enforceable with CHECK/FK (also a cross-row rule) — needs a trigger or app logic; declarative approximation: partial unique index on (copy_id) WHERE return_date IS NULL | borrowings |
 >
 6. **Write the CREATE TABLE statements** for at least the `books`, `copies`, and `borrowings` tables with full constraints.
+
+> [!NOTE]
+>
+> `CHECK (due_date = borrow_date + 14)` enforces the 14-day rule (in PostgreSQL, DATE + integer = DATE). The partial unique index is the closest declarative way to stop a copy from being borrowed twice while it's still out; the 5-loans-per-member limit still needs a trigger or application code.
+
+```sql
+CREATE TABLE genres (
+    genre_id   INTEGER      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    genre_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE books (
+    isbn             VARCHAR(13)  PRIMARY KEY CHECK (LENGTH(isbn) = 13),
+    title            VARCHAR(255) NOT NULL,
+    publication_year INTEGER      NOT NULL,
+    genre_id         INTEGER      NOT NULL REFERENCES genres(genre_id)
+);
+
+CREATE TABLE copies (
+    copy_id INTEGER     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    barcode VARCHAR(50) NOT NULL UNIQUE,
+    book_id VARCHAR(13) NOT NULL REFERENCES books(isbn)
+);
+
+CREATE TABLE members (
+    member_id     INTEGER      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    member_number INTEGER      NOT NULL UNIQUE,
+    name          VARCHAR(200) NOT NULL,
+    email         VARCHAR(255) NOT NULL UNIQUE,
+    phone         VARCHAR(20)
+);
+
+CREATE TABLE borrowings (
+    borrowing_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    copy_id      INTEGER NOT NULL REFERENCES copies(copy_id),
+    member_id    INTEGER NOT NULL REFERENCES members(member_id),
+    borrow_date  DATE    NOT NULL DEFAULT CURRENT_DATE,
+    due_date     DATE    NOT NULL CHECK (due_date = borrow_date + 14),
+    return_date  DATE 
+);
+
+CREATE UNIQUE INDEX borrowings_one_open_loan_per_copy_idx
+    ON borrowings (copy_id)
+    WHERE return_date IS NULL;
+```
 
 ---
 
 ## Submission Checklist
 
-- [ ] Task 1: Key identification answers (Part 1)
-- [ ] Task 2: Business rules table with 5 rules (Part 1)
-- [ ] Task 3: Integrity violation predictions with explanations (Part 1)
-- [ ] Task 4: Foreign key action analysis (Part 1)
-- [ ] Theory Review Questions answered (Part 2)
-- [ ] SQL Practice — constraint predictions and bookstore CREATE TABLE (Part 3)
-- [ ] Library System design exercise (Part 4)
+- [x] Task 1: Key identification answers (Part 1)
+- [x] Task 2: Business rules table with 5 rules (Part 1)
+- [x] Task 3: Integrity violation predictions with explanations (Part 1)
+- [x] Task 4: Foreign key action analysis (Part 1)
+- [x] Theory Review Questions answered (Part 2)
+- [x] SQL Practice — constraint predictions and bookstore CREATE TABLE (Part 3)
+- [x] Library System design exercise (Part 4)
