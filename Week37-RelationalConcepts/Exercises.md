@@ -141,16 +141,8 @@ Consider the following scenario using the schema from Theory Section 9.8:
 2. Which foreign key action would you recommend for the TrailShop `products.category_id` → `categories.category_id` relationship? Justify your choice in 2–3 sentences.
 
 > [!NOTE]
-> ***Your Answer***
+> For products category foreign key action I would choose the SET NULL action, because it allows us to later add or delete categories easily. If we need to update products that do not have categories, we can easily query those products that have category_id set to NULL.
 >
-> *(Write your answer here.)*
->
->
->
->
-
-
-
 
 ---
 
