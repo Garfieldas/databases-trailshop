@@ -155,27 +155,16 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 **Q1.** Define the following terms in your own words: relation, tuple, attribute, domain. Give one TrailShop example for each.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> A **relation** is a table — a named, two-dimensional structure of rows and columns, for example the products table. A **tuple** is one row in a relation, e.g. (101, 'Alpine Pro Hiking Boots', 189.50, 42, 1). An **attribute** is one column of the table, e.g. price. A **domain** is the pool of all legal values for an attribute, e.g. for price it is positive decimal numbers (NUMERIC(10,2) with CHECK (price > 0)).
 
 *(See Sections 2 and 3 of this week's Theory material.)*
 
 **Q2.** What makes a candidate key different from a primary key? Can a table have more than one candidate key?
 
-
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> A **candidate key** is any minimal superkey — it uniquely identifies every row, and you cannot remove any attribute from it without losing uniqueness. The **primary key** is simply the one candidate key the designer chooses as the official row identifier, and every table has exactly one PK. A table can have several candidate keys, though. For example, in customers both customer_id and email could be candidate keys — choosing customer_id as the PK makes email an alternate key, enforced with a UNIQUE constraint.
 
 *(See Section 6 of this week's Theory material.)*
 
@@ -183,39 +172,36 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> **Entity integrity** means every table must have a primary key, and no part of that primary key can ever be NULL. If a PK value were NULL, the row could not be uniquely identified — it could not be reliably found, updated, deleted, or referenced by other tables. The rule applies to every column of a composite PK too: in order_items neither order_id nor product_id may be NULL. PostgreSQL enforces this automatically, because PRIMARY KEY implies NOT NULL and UNIQUE.
 
 *(See Section 8.1 of this week's Theory material.)*
 
 **Q4.** What happens when referential integrity is violated? Give a concrete TrailShop example — show the SQL statement and the expected error.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
+> **Referential integrity** says every foreign key value must match an existing primary key value in the referenced table, or be NULL (if the FK column allows it). If it is violated, PostgreSQL rejects the statement so that no orphan record can be created. Example — inserting a product with a category that does not exist:
 >
+> ```sql
+> INSERT INTO products (product_id, name, price, stock_quantity, category_id)
+> VALUES (109, 'Ghost Product', 59.99, 5, 99);
+> ```
 >
+> Expected error:
 >
->
+> ```text
+> ERROR:  insert or update on table "products" violates foreign key constraint "products_category_id_fkey"
+> DETAIL:  Key (category_id)=(99) is not present in table "categories".
+> ```
 
 *(See Section 8.2 of this week's Theory material.)*
 
 **Q5.** Explain the difference between a surrogate key and a natural key. Give an example of each for a `books` table in a library database.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> A **surrogate key** is an artificial identifier with no business meaning — typically an auto-generated integer or a UUID. A **natural key** is drawn from real-world data and carries business meaning. In a books table, book_id INTEGER GENERATED ALWAYS AS IDENTITY would be the surrogate key, while the ISBN is the natural key. In practice you use the surrogate key as the PK and enforce the natural key with a UNIQUE constraint, because surrogate keys are simple, compact, stable, and never need to change.
 
 *(See Section 6.8–6.9 of this week's Theory material.)*
 
@@ -223,26 +209,16 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> A **NULL** means the value is unknown or not applicable — it is not the same as zero or an empty string. Any comparison involving NULL returns UNKNOWN instead of TRUE, so WHERE price = NULL never matches any row (even NULL = NULL is UNKNOWN). The correct way to test for it is WHERE price IS NULL (or WHERE price IS NOT NULL).
 
 *(See Section 7 of this week's Theory material.)*
 
 **Q7.** What is a junction table? When is it needed? Give an example.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> A **junction table** (also called a linking or bridge table) implements a many-to-many (M:N) relationship, which cannot be represented directly with a single foreign key. It holds foreign keys to both related tables, usually with their combination as a composite primary key. TrailShop example: product_tags(product_id, tag_id) — a product can have many tags and a tag can belong to many products. order_items is also a junction table, implementing the M:N relationship between orders and products.
 
 *(See Section 12.3 of this week's Theory material.)*
 
@@ -251,11 +227,7 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 > [!NOTE]
 > ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> **1:1** — one row in table A relates to exactly one row in table B, e.g. products ↔ product_details (the detail table's PK is also its FK to `products`). **1:N** — one row in A relates to many rows in B, e.g. one category has many products, or one customer has many orders; the foreign key always sits on the "many" side. **M:N** — many rows on each side relate to many rows on the other, e.g. products ↔ tags, which requires the product_tags junction table.
 
 *(See Section 12 of this week's Theory material.)*
 
@@ -265,11 +237,7 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 > [!NOTE]
 > ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> ON DELETE CASCADE propagates the deletion to the referencing rows: deleting category 2 would also automatically delete products 102 and 106. ON DELETE RESTRICT rejects the deletion while referencing rows exist, forcing you to handle the dependent data explicitly first. CASCADE is appropriate when child rows are meaningless without their parent (e.g. order_items without its order), while RESTRICT is the safest default for relationships like categories → products, where you want to prevent accidental data loss.
 
 *(See Section 10 of this week's Theory material.)*
 
@@ -278,11 +246,7 @@ Answer each question in 2–4 sentences unless otherwise specified. Reference th
 > [!NOTE]
 > ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
->
+> **Atomic entries** means every cell must contain a single, indivisible value — not a list, a set, or a nested structure (this is what First Normal Form requires). A violation would be storing 'Footwear, Hiking' in a single categories cell of the products table. That breaks simple querying — filtering by category would need string parsing instead of a simple WHERE clause — and it also breaks referential integrity. The fix is one row per category, or a junction table when a product can truly have several categories.
 
 *(See Section 5.3 of this week's Theory material.)*
 
@@ -296,6 +260,16 @@ For each statement, write **True** or **False** and correct any false statements
 4. A foreign key must always be NOT NULL.
 5. Referential integrity ensures that every FK value matches an existing PK value (or is NULL).
 6. The degree of a relation is the number of rows.
+
+> [!NOTE]
+> ***Your Answers***
+>
+> 1. **False** — a candidate key is a *minimal* superkey; a superkey may contain redundant attributes (e.g. {product_id, name} is a superkey, but not a candidate key).
+> 2. **True**
+> 3. **False** — NULL = NULL evaluates to UNKNOWN, not TRUE; NULL must be tested with IS NULL` / IS NOT NULL.
+> 4. **False** — a foreign key can be NULL if the column allows it (e.g. a product that has no category assigned yet).
+> 5. **True**
+> 6. **False** — the degree is the number of columns (attributes); the number of rows is the cardinality.
 
 ### Matching Exercise
 
@@ -337,18 +311,18 @@ Match each term (1–12) with its definition (A–L).
 >
 > | # | Your Match |
 > |---|---|
-> | 1 | |
-> | 2 | |
-> | 3 | |
-> | 4 | |
-> | 5 | |
-> | 6 | |
-> | 7 | |
-> | 8 | |
-> | 9 | |
-> | 10 | |
-> | 11 | |
-> | 12 | |
+> | 1 | F |
+> | 2 | G |
+> | 3 | B |
+> | 4 | H |
+> | 5 | E |
+> | 6 | D |
+> | 7 | J |
+> | 8 | C |
+> | 9 | A |
+> | 10 | K |
+> | 11 | I |
+> | 12 | L |
 >
 
 ---
