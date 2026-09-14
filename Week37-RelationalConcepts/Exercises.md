@@ -133,9 +133,10 @@ VALUES (1001, 101, 0, 189.50);
 Consider the following scenario using the schema from Theory Section 9.8:
 
 1. You want to delete category 2 ("Camping") from the `categories` table. Products 102 and 106 reference this category. What happens with:
-   - `ON DELETE RESTRICT`?
-   - `ON DELETE CASCADE`?
+   - `ON DELETE RESTRICT`? It will prevent category deletion. The DELETE is rejected with a foreign key violation error while products 102 and 106 still reference category 2.
+   - `ON DELETE CASCADE`? It will delete the category and also delete products 102 and 106 that reference it.
    - `ON DELETE SET NULL`? (Assume `category_id` in `products` allows NULL for this question)
+   It will delete the category and set the category_id value to NULL on products 102 and 106 — the products stay in the table, they just become uncategorized. This only works because category_id allows NULL; if it were NOT NULL, the delete would fail with a not-null violation instead.
 
 2. Which foreign key action would you recommend for the TrailShop `products.category_id` → `categories.category_id` relationship? Justify your choice in 2–3 sentences.
 
