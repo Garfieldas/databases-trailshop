@@ -224,9 +224,7 @@ c) What type of entity is Loan in this diagram? Is it a junction/associative ent
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> Loan is junction/associative entity as it connects two entities: member and book.
 >
 >
 >
