@@ -78,8 +78,10 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 
 > [!NOTE]
 > ***Your Answer***
->
-> *(Write your answer here.)*
+> Logical Data Independence: You can change the conceptual schema without changing users’ external schemas (views). For example:
+> You add a new department_id field to the employees table and move department information into a separate departments table.
+> The HR team’s view is redefined to JOIN employees with departments.
+> HR users continue to see employee names and department names in the same format, so their applications need no changes
 >
 >
 >
@@ -88,10 +90,11 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 4. Explain physical data independence with an example. *(Section 3)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> Physical Data Independence: You can change how data is physically stored without changing the conceptual schema or user views. For example:
+> You partition the orders table by year to improve performance.
+> The database stores each year’s orders in a separate partition.
+> Applications still query the same orders table.
+> No SQL queries or views need to change.
 >
 >
 >
@@ -99,12 +102,10 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 5. What is the difference between a strong entity and a weak entity? Give one example of each (not from TrailShop). *(Section 5)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
+> Strong Entity A strong entity can be uniquely identified by its own attributes. It does not depend on any other entity for its existence or identification.
+> For example bank account. It has bank_account_id ,due to that it could be identified and is a strong entity.
+> Weak entity cannot be uniquely identified by its own attributes alone. It depends on a related strong entity (called the owner or identifying entity) for its identification.
+> For example transaction. #1 per account, not globally unique
 >
 
 6. What is a composite attribute? How does it differ from a multivalued attribute? Give an example of each. *(Section 6)*
