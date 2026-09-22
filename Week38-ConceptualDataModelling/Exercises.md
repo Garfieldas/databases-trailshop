@@ -144,7 +144,9 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 
 
 10. In crow's foot notation, what does the following endpoint mean: a circle followed by a crow's foot (fork)? *(Section 9)*
-
+> Maximum many
+>
+>
 11. Why can't a many-to-many (M:N) relationship be directly implemented in a relational database? What is the solution? *(Section 10)*
 
 > [!NOTE]
