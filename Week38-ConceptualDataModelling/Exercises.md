@@ -234,10 +234,7 @@ d) What is the cardinality of the Author-Book relationship? Is this realistic? W
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> It could work, but in real case more practical model would be if one author had many books and one book could have many authors so it would be better to have separate junction table for this.
 >
 >
 >
@@ -246,10 +243,7 @@ e) What attributes would you add to the Loan entity?
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> loand_id, member_id, book_id, loan_date, return_date, renewal_count, status
 >
 >
 >
