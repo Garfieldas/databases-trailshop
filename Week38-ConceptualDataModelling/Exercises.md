@@ -361,12 +361,11 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 2. Identify all relationships with their cardinality and participation constraints.
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
->
+> member -> plan N:1. Member can have one plan ,but same plan belongs to a lot of members. Many to One
+> trainers -> classes 1:N. One trainer can have many classes. One to many
+> members -> register <- classes M:M. Many members can have many clases through junction table register.
+> equipment -> maintenance request 1:N. One equipment can have many maintenance requests. One to many.
 >
 
 3. Draw a complete ER diagram using crow's foot notation.
