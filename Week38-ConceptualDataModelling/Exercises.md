@@ -300,9 +300,7 @@ d) Can a teacher exist without teaching any courses?
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> Yes, it is possible ,because TEACHER O< Course
 >
 >
 >
