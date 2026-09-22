@@ -137,9 +137,7 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 
 9. What is the difference between an identifying relationship and a non-identifying relationship? How does this affect the child table's primary key? *(Section 7)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> Identifying relationship is when foreign key a part of child's primary key. Non-identifying is when foreign key is just atribute and does not serve a purpose of identifycation.
 >
 
 
