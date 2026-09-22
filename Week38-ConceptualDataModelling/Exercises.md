@@ -153,11 +153,11 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 > An M:N relationship cannot be represented directly because one foreign-key value can reference only a single row in another table. Putting several identifiers into one column would break atomicity, and repeating entire rows just to store additional links would create redundant data.
 > The solution is to create a junction (associative) table between the two entities. It stores one row per pairing, with foreign keys to both tables and normally their combination as the composite primary key.
 
-11b. Last week TrailShop used `products.category_id` so each product belonged to exactly one category. Why is that insufficient, and what ER construct replaces it? *(Section 1.4)*
+11b. Last week TrailShop used products.category_id so each product belonged to exactly one category. Why is that insufficient, and what ER construct replaces it? *(Section 1.4)*
 
 > [!NOTE]
-> `products.category_id` is a scalar foreign key, so every product row can store only one category. That makes it impossible to assign the same product to multiple categories, such as `Footwear` and `Hiking`, without duplicating product data.
-> The 1:N relationship should be replaced conceptually by an M:N relationship between products and categories. Physically, this is implemented with a `product_categories(product_id, category_id)` junction table, where both columns are foreign keys and together form the composite primary key.
+> products.category_id is a scalar foreign key, so every product row can store only one category. That makes it impossible to assign the same product to multiple categories, such as Footwear and Hiking, without duplicating product data.
+> The 1:N relationship should be replaced conceptually by an M:N relationship between products and categories. Physically, this is implemented with a product_categories(product_id, category_id) junction table, where both columns are foreign keys and together form the composite primary key.
 
 12. A business rule states: "Every employee must belong to exactly one department, and every department must have at least one employee." Express this using min-max notation for both sides. *(Section 8)*
 
