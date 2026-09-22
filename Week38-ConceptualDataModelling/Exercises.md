@@ -120,9 +120,7 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 7. What is a derived attribute? Why is it usually not stored in the database? *(Section 6)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> Derived attribute is an atribute ,which can be calculated from other existing attributes. They are usually not stored ,because in most cases they are dinamic as order total price and can be calculated everytimne.
 >
 >
 >
