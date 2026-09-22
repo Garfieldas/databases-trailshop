@@ -128,7 +128,9 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 
 8. Explain the difference between a binary relationship and a unary (recursive) relationship. Give an example of each. *(Section 7)*
 > [!NOTE]
->
+> A binary relationship involves exactly two entity types. For example Order contains OrderItem (two entities: Order, OrderItem).
+> A unary relationship (also called recursive) involves a single entity type related to itself.
+> For example phone is a product and phone case is an accesory for product ,but still both are products.
 
 
 
