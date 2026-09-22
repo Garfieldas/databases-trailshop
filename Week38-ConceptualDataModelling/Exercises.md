@@ -203,20 +203,19 @@ Relationships (in crow's foot):
 
 a) Can an author exist without having written any books? Explain using the notation.
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Write your answer here.)*
->
->
+> Yes, he can 
+> AUTHOR ||——O< BOOK
+> One author can have zero or many books.
+> Every book must have exactly one author.
 >
 >
 
 b) Can a book exist without being loaned? Explain using the notation.
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> One book can appear in zero or many loan records over time.
+> Every loan record refers to exactly one book.
+> BOOK ||——O< LOAN
 >
 >
 >
