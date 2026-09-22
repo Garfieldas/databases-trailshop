@@ -429,10 +429,10 @@ Find the four errors in this design and for each one:
 
 a) State what the error is
 > [!NOTE]
-> author_name is specified inside books table. It is better to have separate author table and reference it's foreign key as author_id inside books table.
->
->
->
+> Genres from book attribute needs to be changed as foreign key to genres table.
+> Customer full_name should be separated into name and surname attributes.
+> Total amount of purchase 6.5 derived attribute
+> Purchase needs a junction table
 
 b) Explain why it's a problem (reference the relevant theory section)
 
