@@ -291,10 +291,7 @@ c) What is the cardinality between Student and Course (through Enrollment)?
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> Cardinality is many to many through Enrollment. Student can have 0 or many enrollements. Course can have 1 or many enrollements.
 >
 >
 >
@@ -316,8 +313,7 @@ e) Is the Teacher-Course relationship 1:1 or 1:N? What does this imply about tea
 
 > [!NOTE]
 > ***Your Answer***
->
-> *(Write your answer here.)*
+> Car
 >
 >
 >
