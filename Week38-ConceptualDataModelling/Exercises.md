@@ -379,11 +379,8 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 4. Identify any entity that might be considered a weak entity or a junction/associative entity. Justify your answer.
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
+> Weak entity is register ,because it is identified by member_id and class_id foreign keys.
+> Strong entity is plan ,because plan has he's it's own unique id identification and could be identified idependantly.
 >
 >
 
