@@ -271,10 +271,7 @@ a) Can a student exist without being enrolled in any course?
 
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> According to diagra, yes ,because STUDENT ─O<── ENROLLMENT
 >
 >
 >
