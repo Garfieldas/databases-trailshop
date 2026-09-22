@@ -40,9 +40,9 @@ Using the entity descriptions from Theory Section 12, create an ER diagram that 
 - A short written paragraph (3–5 sentences) that **must** explain why Week 37's 1:N `products.category_id` is being replaced by ProductCategory. You may also discuss another design decision (for example why OrderItem is a weak entity, or why `unit_price` is stored in OrderItem).
 
 > [!NOTE]
-> ***Your Answer***
+![Screenshot](https://i.ibb.co/wrNqftWQ/Screenshot-2026-09-22-at-22-07-04.png)
 >
-> *(Write your answer here.)*
+> In Week 37, products.category_id modeled Category 1:N Product, which forces every product to belong to exactly one category — a single FK column physically cannot store a product in two categories at once. TrailShop's real business rule is that a product can appear in several categories (e.g. a jacket in both "Outerwear" and "Sale") and a category obviously contains many products, which is an M:N relationship. Relational databases cannot implement M:N directly, so it is resolved with the junction entity ProductCategory, whose rows pair a category_id with a product_id and turn the M:N into two 1:N relationships. This also removes category_id from Product, so adding or removing a category membership never requires restructuring the Product table. As another design decision, unit_price is stored in OrderItem rather than being read from Product, because product prices change over time and each order must preserve the historical price the customer actually paid at the moment of purchase.
 >
 >
 >
@@ -429,10 +429,7 @@ Find the four errors in this design and for each one:
 
 a) State what the error is
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> author_name is specified inside books table. It is better to have separate author table and reference it's foreign key as author_id inside books table.
 >
 >
 >
