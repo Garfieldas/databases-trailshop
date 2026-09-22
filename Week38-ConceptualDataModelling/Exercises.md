@@ -387,10 +387,7 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 5. Are there any M:N relationships? If so, what junction entity resolves them?
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> Member and class relationship. It is resolved using junction table register
 >
 >
 >
