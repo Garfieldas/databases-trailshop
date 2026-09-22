@@ -281,8 +281,7 @@ b) Can a course exist without having any enrolled students?
 
 > [!NOTE]
 > ***Your Answer***
->
-> *(Write your answer here.)*
+> No, because it requires at least one erollment. ENROLLMENT ──>|─-─ COURSE
 >
 >
 >
