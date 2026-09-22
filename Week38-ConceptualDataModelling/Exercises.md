@@ -310,9 +310,7 @@ e) Is the Teacher-Course relationship 1:1 or 1:N? What does this imply about tea
 
 
 > [!NOTE]
-> ***Your Answer***
-> Car
->
+> It is 1:N ,because multiple teachers can teach same course.
 >
 >
 >
