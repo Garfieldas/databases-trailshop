@@ -342,13 +342,21 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 1. Identify all entities and their attributes (including key attributes).
 
 > [!NOTE]
-> ***Your Answer***
+> **members:** member_id (PK), first_name, last_name, email, phone, date_of_birth, membership_start_date, plan_id (FK → plan)
 >
-> *(Write your answer here.)*
+> **plan:** plan_id (PK), name, monthly_price, description
 >
+> **trainers:** trainer_id (PK), first_name, last_name, specialization, hire_date
 >
+> **classes:** classes_id (PK), name, day_of_the_week, start_time, end_time, capacity, trainer_id (FK → trainers)
 >
+> **register:** register_id (PK), member_id (FK → members), class_id (FK → classes), registration_date
 >
+> **equipment:** equipment_id (PK), name, type, purchase_date, status
+>
+> **maintenance_request:** maintenance_id (PK), request_date, description, status, resolution_date, equipment_id (FK → equipment)
+>
+> ![Screenshot](https://i.ibb.co/twgNc8pb/Screenshot-2026-09-22-at-21-34-59.png)
 
 2. Identify all relationships with their cardinality and participation constraints.
 
@@ -364,9 +372,6 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 3. Draw a complete ER diagram using crow's foot notation.
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Add a link to your image here)*
 >
 >
 >
