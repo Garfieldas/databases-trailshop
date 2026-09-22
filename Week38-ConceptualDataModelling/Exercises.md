@@ -111,13 +111,11 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 6. What is a composite attribute? How does it differ from a multivalued attribute? Give an example of each. *(Section 6)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
->
+> A composite attribute can be divided into smaller, meaningful sub-attributes.
+> Example: full_name could be split into first_name and last_name.
+> A multivalued attribute can hold multiple values for a single entity instance.
+> A product might have multiple tags: "waterproof", "lightweight", "bestseller
+> Main diference is that composite atribute is combination of existing single table atributes, but multivalued atrribute is created using a junction table.
 
 7. What is a derived attribute? Why is it usually not stored in the database? *(Section 6)*
 
