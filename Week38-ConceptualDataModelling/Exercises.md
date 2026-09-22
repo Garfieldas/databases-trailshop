@@ -128,9 +128,6 @@ Answer each question in 2–4 sentences. Reference the relevant theory section. 
 
 8. Explain the difference between a binary relationship and a unary (recursive) relationship. Give an example of each. *(Section 7)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
 >
 
 
