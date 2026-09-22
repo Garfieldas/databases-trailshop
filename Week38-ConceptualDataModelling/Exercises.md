@@ -371,7 +371,7 @@ FitZone is a local gym and fitness center. They need a database to manage their 
 3. Draw a complete ER diagram using crow's foot notation.
 
 > [!NOTE]
->
+> ![Screenshot](https://i.ibb.co/pjfvvhMM/Screenshot-2026-09-22-at-21-53-26.png)
 >
 >
 >
