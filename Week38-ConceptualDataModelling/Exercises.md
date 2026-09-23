@@ -429,10 +429,10 @@ Find the four errors in this design and for each one:
 
 a) State what the error is
 > [!NOTE]
-> Genres from book attribute needs to be changed as foreign key to genres table.
-> Customer full_name should be separated into name and surname attributes.
-> Total amount of purchase 6.5 derived attribute
-> Purchase needs a junction table
+> 1. **Multivalued attribute:** books genre stores several genres "Fiction, Mystery, Thriller" in one comma-separated string instead of a single atomic value.
+> 2. **M:N implemented directly:** the Books to Customer M:N relationship has no junction table so the relational model cannot implement many to many relationship without one.
+> 3. **Missing relationship:** books to Purchase has no relationship defined, so a purchase is not connected to the books it contains.
+> 4. **Naming convention violation:** the entity name book is plural while customer and purchase are singular.
 
 b) Explain why it's a problem (reference the relevant theory section)
 
