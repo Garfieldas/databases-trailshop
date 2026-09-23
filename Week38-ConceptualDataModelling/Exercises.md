@@ -437,24 +437,24 @@ a) State what the error is
 b) Explain why it's a problem (reference the relevant theory section)
 
 > [!NOTE]
-> ***Your Answer***
+> 1. Theory 6.2, 6.4 Attributes must be simple and atomic. One single value per attribute. Packing "Fiction, Mystery, Thriller" into one comma-separated string violates atomicity: you cannot reliably query, filter or index individual genres, and a genre cannot be updated in one place. Theory 6.4 says a multivalued attribute must be mapped to a separate table, never stored as a list in one cell.
 >
-> *(Write your answer here.)*
+> 2. Theory 10.1, 10.2 A many-to-many relationship cannot be directly implemented in a relational database. A foreign key column can store only one value per row, so neither customer_id on books or book_id on customer can represent the many side. Theory 10.2 requires a junction table that holds foreign keys to both sides, turning the M:N into two 1:N relationships.
 >
+> 3. Theory 7.1, 11.3 A relationship is a meaningful association between entities - with no link between Books and Purchase, a purchase records a total_amoun but is disconnected from what was actually bought. There is no way to know which books a purchase contains or to verify the total, so purchase becomes an orphaned entity. Section 11.3 lists undefined relationships as a common design mistake.
 >
->
->
+> 4. (Theory 11.1) Entity naming conventions require singular nouns - customer, not customers, because an entity type describes one instance. Naming one entity books plural while the others are singular breaks consistency and causes confusion when the ER model is mapped to relational tables.
 
 c) Describe how to fix it
 
 > [!NOTE]
-> ***Your Answer***
+> 1. make a new table genre with genre_id as primary key and genre_name. Add a junction table book_genre with book_id and genre_id as foreign keys ,so one book can have many genres and one genre many books. remove the genres column from book.
 >
-> *(Write your answer here.)*
+> 2. Resolve the many to many with a junction table between customer and book ,same like product_category in trailshop. It turns many to many into two one to many relationships.
 >
+> 3. Add a junction table purchase_item with purchase_id and book_id as foreign keys ,also quantity and unit_price ,so purchase knows which books it has. add customer_id as foreign key to purchase for the one to many with customer.
 >
->
->
+> 4. Rename books to book ,because entity names should be singular like customer and purchase.
 
 **Hints:** Think about multivalued attributes, M:N relationships, entity naming conventions, and missing relationships.
 
@@ -462,8 +462,8 @@ c) Describe how to fix it
 
 ## Submission Checklist
 
-- [ ] Exercise 1: ER diagram + design decision paragraph (including why Week 37's category FK is replaced)
-- [ ] Exercise 2: All 12 theory review answers, plus 11b
-- [ ] Exercise 3: All questions answered for both Diagram A and Diagram B
-- [ ] Exercise 4: Entity list, relationship list, ER diagram, and justifications
-- [ ] Exercise 5: Four errors identified with explanations and corrections
+- [X] Exercise 1: ER diagram + design decision paragraph (including why Week 37's category FK is replaced)
+- [X] Exercise 2: All 12 theory review answers, plus 11b
+- [X] Exercise 3: All questions answered for both Diagram A and Diagram B
+- [X] Exercise 4: Entity list, relationship list, ER diagram, and justifications
+- [X] Exercise 5: Four errors identified with explanations and corrections
