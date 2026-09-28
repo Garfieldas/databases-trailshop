@@ -79,11 +79,21 @@ Answer each question in 2–4 sentences. Reference the relevant theory section.
 1. List the seven phases of the database development lifecycle in order. Which phase is this week's focus? *(Section 1)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
+>┌──────────────────────────────────┐
+>│  1. Requirements Gathering       │
+>├──────────────────────────────────┤
+>│  2. Conceptual Design            │
+>├──────────────────────────────────┤
+>│  3. Logical Design               │  - this week
+>├──────────────────────────────────┤
+>│  4. Physical Design              │
+>├──────────────────────────────────┤
+>│  5. Implementation               │
+>├──────────────────────────────────┤
+>│  6. Testing & Validation         │
+>├──────────────────────────────────┤
+>│  7. Maintenance & Evolution      │
+>└──────────────────────────────────┘
 >
 >
 
