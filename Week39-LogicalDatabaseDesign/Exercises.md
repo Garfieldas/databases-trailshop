@@ -55,21 +55,100 @@ After creating the tables, insert sample data:
 Verify that your constraints work by attempting at least 2 invalid inserts and showing the error messages.
 
 > [!NOTE]
-> ***Your SQL***
 >
 > ```sql
-> -- Paste key CREATE TABLE statements or link to your .sql file contents here
+> CREATE TABLE categories (
+>     category_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     category_name VARCHAR(100) NOT NULL UNIQUE,
+>     description   VARCHAR(500)
+> );
 >
+> CREATE TABLE customers (
+>     customer_id    BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     first_name     VARCHAR(50)  NOT NULL,
+>     last_name      VARCHAR(50)  NOT NULL,
+>     email          VARCHAR(255) NOT NULL UNIQUE,
+>     phone          VARCHAR(25),
+>     street_address VARCHAR(150),
+>     city           VARCHAR(100),
+>     postal_code    VARCHAR(20),
+>     country        VARCHAR(100),
+>     registered_at  TIMESTAMPTZ  NOT NULL DEFAULT now(),
+>     CONSTRAINT chk_customers_email_format
+>         CHECK (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$')
+> );
 >
+> CREATE TABLE products (
+>     product_id     BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     name           VARCHAR(150)  NOT NULL,
+>     description    VARCHAR(1000),
+>     price          NUMERIC(10,2) NOT NULL CHECK (price >= 0),
+>     weight_kg      NUMERIC(8,3)  CHECK (weight_kg > 0),
+>     stock_quantity INTEGER       NOT NULL DEFAULT 0
+>                    CHECK (stock_quantity >= 0),
+>     created_at     TIMESTAMPTZ   NOT NULL DEFAULT now()
+> );
+>
+> CREATE TABLE product_categories (
+>     category_id BIGINT NOT NULL,
+>     product_id  BIGINT NOT NULL,
+>     PRIMARY KEY (category_id, product_id),
+>     CONSTRAINT fk_pc_category FOREIGN KEY (category_id)
+>         REFERENCES categories (category_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE,
+>     CONSTRAINT fk_pc_product FOREIGN KEY (product_id)
+>         REFERENCES products (product_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE
+> );
+>
+> CREATE TABLE orders (
+>     order_id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     order_date       TIMESTAMPTZ NOT NULL DEFAULT now(),
+>     status           VARCHAR(20) NOT NULL DEFAULT 'pending'
+>                      CHECK (status IN
+>                          ('pending', 'paid', 'shipped', 'delivered', 'cancelled')),
+>     shipping_address VARCHAR(300),
+>     customer_id      BIGINT NOT NULL,
+>     CONSTRAINT fk_orders_customer FOREIGN KEY (customer_id)
+>         REFERENCES customers (customer_id)
+>         ON DELETE RESTRICT ON UPDATE CASCADE
+> );
+>
+> CREATE TABLE order_items (
+>     order_id   BIGINT NOT NULL,
+>     product_id BIGINT NOT NULL,
+>     quantity   INTEGER       NOT NULL CHECK (quantity > 0),
+>     unit_price NUMERIC(10,2) NOT NULL CHECK (unit_price >= 0),
+>     PRIMARY KEY (order_id, product_id),
+>     CONSTRAINT fk_oi_order FOREIGN KEY (order_id)
+>         REFERENCES orders (order_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE,
+>     CONSTRAINT fk_oi_product FOREIGN KEY (product_id)
+>         REFERENCES products (product_id)
+>         ON DELETE RESTRICT ON UPDATE CASCADE
+> );
 > ```
+> Invalid insert checks (each was attempted against the schema):
+>
+> ```sql
+> INSERT INTO customers (first_name, last_name, email)
+> VALUES ('dainius', 'xamk', 'test');
+> ```
+> ERROR: new row for relation "customers" violates check constraint "chk_customers_email_format"
+>
+> ```sql
+> INSERT INTO products (name, price, weight_kg)
+> VALUES ('negative price', -1.00, 1.000);
+> ```
+> ERROR: new row for relation "products" violates check constraint "products_price_check"
 
 > [!NOTE]
-> ***Your Answer***
 >
-> *(Paste written justifications for data types, FK actions, and design decisions here.)*
+> NUMERIC(10,2) is used for product prices and order-item unit prices so monetary values are stored exactly to two decimal places; floating-point types can introduce rounding errors. TIMESTAMPTZ is used for registration, creation, and order timestamps so each value represents an unambiguous instant across time zones. BIGINT GENERATED ALWAYS AS IDENTITY provides system-generated primary keys with a large range.
 >
+> Both foreign keys in product_categories use ON DELETE CASCADE because a category-product assignment has no independent meaning after either referenced row is deleted. orders.customer_id uses ON DELETE RESTRICT to preserve customers referenced by orders, while order_items.order_id uses ON DELETE CASCADE because order items should be removed with their order. order_items.product_id uses ON DELETE RESTRICT to prevent deleting a product that appears in an order's history. All foreign keys use ON UPDATE CASCADE so changed referenced keys propagate to dependent rows.
 >
->
+> One additional design choice is that shipping_address is nullable, allowing an order to be recorded without a shipping address (for example, a pickup order). Product stock defaults to zero, and new orders default to the pending status.
 >
 
 ## Exercise 2: Theory Review Questions
