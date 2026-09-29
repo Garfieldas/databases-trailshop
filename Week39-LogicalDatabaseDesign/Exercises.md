@@ -498,8 +498,8 @@ For each business rule below, write the appropriate PostgreSQL constraint. Provi
 
 ## Submission Checklist
 
-- [ ] Exercise 1: `.sql` file with all CREATE TABLE statements + written justifications
-- [ ] Exercise 2: All 12 theory review answers
-- [ ] Exercise 3: Hotel booking schema with all tables and explanations
-- [ ] Exercise 4: Data type selections with justifications for all 15 columns
-- [ ] Exercise 5: All 12 constraints written in valid PostgreSQL syntax
+- [x] Exercise 1: `.sql` file with all CREATE TABLE statements + written justifications
+- [x] Exercise 2: All 12 theory review answers
+- [x] Exercise 3: Hotel booking schema with all tables and explanations
+- [x] Exercise 4: Data type selections with justifications for all 15 columns
+- [x] Exercise 5: All 12 constraints written in valid PostgreSQL syntax
