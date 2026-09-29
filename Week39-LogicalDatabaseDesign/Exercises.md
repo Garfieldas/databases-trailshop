@@ -321,21 +321,21 @@ For each column described below, choose the best PostgreSQL data type and write 
 
 | # | Column Description | Your Data Type | Justification |
 |---|---|---|---|
-| 1 | Employee salary (exact, up to €999,999.99) | | |
-| 2 | Number of items in stock (never negative, max ~50,000) | | |
-| 3 | Whether a user's email is verified | | |
-| 4 | Customer's date of birth | | |
-| 5 | Product description (variable length, could be several paragraphs) | | |
-| 6 | Country code (always exactly 2 letters, like "FI", "US") | | |
-| 7 | IP address of a login attempt | | |
-| 8 | Order total (exact, up to €9,999,999.99) | | |
-| 9 | GPS latitude of a store location | | |
-| 10 | A unique identifier for API tokens that must be globally unique across distributed systems | | |
-| 11 | Duration of a video in seconds (always a whole number) | | |
-| 12 | Timestamp of when a record was last modified (users in multiple time zones) | | |
-| 13 | A Finnish phone number like "+358 40 123 4567" | | |
-| 14 | A percentage discount (0.00% to 100.00%) | | |
-| 15 | A product's color options (e.g., a product comes in "red", "blue", "green") | | |
+| 1 | Employee salary (exact, up to €999,999.99) | NUMERIC(8,2) | Stores the six whole-number digits and two decimal places exactly, which is essential for money. |
+| 2 | Number of items in stock (never negative, max ~50,000) | INTEGER | It efficiently stores whole-number counts; add CHECK (stock_count >= 0) to prevent negative values. |
+| 3 | Whether a user's email is verified | BOOLEAN | This represents a true/false state directly; a DEFAULT FALSE is appropriate if new emails start unverified. |
+| 4 | Customer's date of birth | DATE | Only the calendar date matters, so a time-of-day or time-zone component would be unnecessary. |
+| 5 | Product description (variable length, could be several paragraphs) | TEXT | PostgreSQL TEXT supports variable-length descriptions without an arbitrary short limit. |
+| 6 | Country code (always exactly 2 letters, like "FI", "US") | VARCHAR(2) | Use CHECK (country_code ~ '^[A-Z]{2}$') to require exactly two uppercase letters. |
+| 7 | IP address of a login attempt | INET | PostgreSQL's network type validates IPv4 and IPv6 addresses and supports network-aware operators. |
+| 8 | Order total (exact, up to €9,999,999.99) | NUMERIC(11,2) | This provides nine whole-number digits plus two decimal places with exact arithmetic. |
+| 9 | GPS latitude of a store location | NUMERIC(8,6) | Six decimal places provide useful location precision; add CHECK (latitude BETWEEN -90 AND 90) for the valid latitude range. |
+| 10 | A unique identifier for API tokens that must be globally unique across distributed systems | UUID | UUIDs can be generated independently across systems with a very low collision risk and are supported natively by PostgreSQL. |
+| 11 | Duration of a video in seconds (always a whole number) | INTEGER | A whole-number count of seconds fits comfortably in a 32-bit integer for video durations. |
+| 12 | Timestamp of when a record was last modified (users in multiple time zones) | TIMESTAMPTZ | PostgreSQL stores an absolute instant and converts it for the session time zone, avoiding ambiguity across time zones. |
+| 13 | A Finnish phone number like "+358 40 123 4567" | VARCHAR(20) | Phone numbers are identifiers, not quantities; text preserves the plus sign, spaces, and leading zeros. |
+| 14 | A percentage discount (0.00% to 100.00%) | NUMERIC(5,2) | It stores percentages exactly to two decimal places; add CHECK (discount BETWEEN 0 AND 100) for the allowed range. |
+| 15 | A product's color options (e.g., a product comes in "red", "blue", "green") | TEXT in a product_colors table | Store one color per row with a product foreign key, rather than multiple values in one field; this supports normalizing the data and querying individual colors. |
 
 ---
 
@@ -359,9 +359,15 @@ For each business rule below, write the appropriate PostgreSQL constraint. Provi
 > ***Your SQL***
 >
 > ```sql
-> -- Write constraints 1–5 here
+> weight NUMERIC(8,2) CHECK (weight > 0),
 >
+> email TEXT NOT NULL,
 >
+> product_name TEXT UNIQUE,
+>
+> hire_date DATE DEFAULT CURRENT_DATE,
+>
+> order_status TEXT CHECK (order_status IN ('new', 'confirmed', 'shipped', 'delivered', 'returned'))
 > ```
 
 ### Part B: Multi-Column Constraints
@@ -376,9 +382,10 @@ For each business rule below, write the appropriate PostgreSQL constraint. Provi
 > ***Your SQL***
 >
 > ```sql
-> -- Write constraints 6–8 here
->
->
+> CHECK (arrival_time > departure_time),
+> UNIQUE (student_id, course_id),
+> CHECK (discount_percentage BETWEEN 0 AND 100)
+
 > ```
 
 ### Part C: Foreign Key Constraints with Actions
@@ -395,9 +402,25 @@ For each business rule below, write the appropriate PostgreSQL constraint. Provi
 > ***Your SQL***
 >
 > ```sql
-> -- Write constraints 9–12 here
+> ALTER TABLE employees
+>     ADD CONSTRAINT fk_employees_department
+>     FOREIGN KEY (department_id) REFERENCES departments (department_id)
+>     ON DELETE SET NULL ON UPDATE CASCADE;
 >
+> ALTER TABLE orders
+>     ADD CONSTRAINT fk_orders_customer
+>     FOREIGN KEY (customer_id) REFERENCES customers (customer_id)
+>     ON DELETE RESTRICT ON UPDATE CASCADE;
 >
+> ALTER TABLE blog_posts
+>     ADD CONSTRAINT fk_blog_posts_author
+>     FOREIGN KEY (author_id) REFERENCES authors (author_id)
+>     ON DELETE CASCADE ON UPDATE CASCADE;
+>
+> ALTER TABLE enrollments
+>     ADD CONSTRAINT fk_enrollments_course
+>     FOREIGN KEY (course_id) REFERENCES courses (course_id)
+>     ON DELETE CASCADE ON UPDATE CASCADE;
 > ```
 
 ---
