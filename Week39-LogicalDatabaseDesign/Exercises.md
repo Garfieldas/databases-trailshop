@@ -170,31 +170,24 @@ Answer each question in 2–4 sentences. Reference the relevant theory section.
 
 10. What is the difference between a surrogate key and a natural key? Give one advantage of each. *(Section 9)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
-
+> Surrogate Key: An artificial, system-generated value with no business meaning.
+> Natural Key: A column (or columns) that has real-world meaning and naturally identifies each row.
+> Natural keys has an advantage of being more natural as identifier for example user email address
+> Surrogate keys have an advantage of being consitent and much faster on join queries.
 
 
 
 11. Why does PostgreSQL fold unquoted identifiers to lowercase? How does `snake_case` naming help? *(Section 8)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
+> PostgreSQL folds unquoted identifiers to lowercase.
+> snake_case helps here ,because it stores exactly as it was written.
 >
 >
 
 12. What does `SET NULL` do as a foreign key action? When would you use it instead of `CASCADE`? *(Section 6)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> Set Null action sets foreign key to null if that entity was deleted. It helps in those scenarios ,then entity on it's own has meaning and relationship not that important.
 
 
 
