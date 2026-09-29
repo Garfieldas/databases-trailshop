@@ -100,31 +100,26 @@ Answer each question in 2–4 sentences. Reference the relevant theory section.
 2. Explain the transformation rule for mapping a 1:N relationship to the relational model. Why is the foreign key placed on the "many" side? *(Section 3.2)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
->
+> Add the primary key of the "one" side as a foreign key column in the "many" side table.
+> Example: Customer (1) → Order (N).
+> each order belongs to ONE customer — you can store that single reference in the order row. If you tried to store it on the Customer  side, you'd need to store multiple order IDs per customer row, violating atomicity.
 >
 
 3. What is a junction table? When is it needed? Give an example not from TrailShop. *(Section 3.3)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
+> Junction table represets M:N relationship. It only stores primary keys of both sides without additional attributes.
+> Example Rented books: it could store foreign key of a user and a book ,that he has rented. Same could be rented by a lot of users over time.
 >
 >
 
 4. When mapping a 1:1 relationship, how do you decide which table gets the foreign key? *(Section 3.4)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> If one side has mandatory participation and the other optional: Put the FK on the mandatory side (it will always have a value).
+> If both sides are mandatory: Either side works; choose the side that makes queries more natural.
+> If both sides are optional: Put the FK on the side that is more likely to have the value. Mark the FK column as NULL-able.
+> Alternative: Merge both entities into one table if they always exist together.
 >
 >
 >
@@ -133,40 +128,32 @@ Answer each question in 2–4 sentences. Reference the relevant theory section.
 5. How does the mapping of a weak entity differ from a strong entity? What happens to the primary key? *(Section 3.5)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
->
+> Create a table for the weak entity. Include the owner entity's primary key as both a foreign key AND part of the composite primary key.
+> Owner's entity (strong entity) becomes both a foreign key and the part of composite key.
 >
 >
 
 6. Why should you never use `REAL` or `DOUBLE PRECISION` for monetary values? What should you use instead? *(Section 4.1)*
 
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> Because you would never get correct accuaracy as those data types are used for scientific data. It's much better to use Numeric type
 >
 >
 >
 
 7. What is the difference between `TIMESTAMP` and `TIMESTAMPTZ`? Which should you prefer and why? *(Section 4.3)*
 > [!NOTE]
-> ***Your Answer***
+> Timestamp - is date + time without timezone. 
+> TimestampTz - is date + time and timezone. It's always better to use Timestamptz to avoid time zone bugs when users are in different time zones.
 >
-> *(Write your answer here.)*
->
-
-
-
 
 8. Explain the difference between `CASCADE` and `RESTRICT` as foreign key delete actions. Give a scenario where each is appropriate. *(Section 6)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
+> Cascade - delete all child rows automatically
+> Restrict - same as no action but checked immediately
+> Cascade are used then children values does not have any meaningfull value on their own and it is not very important if they are deleted
+> Example of cascade: Book tags table. it is not important to hold that information if the book itself is deleted
+> Example of restrict: Invoice. If invoice is unpaid and references a customer it is important to prevent deleting customer while this invoice exists.
 >
 
 
