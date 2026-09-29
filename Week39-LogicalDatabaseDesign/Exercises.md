@@ -229,21 +229,86 @@ A hotel booking system has the following entities and relationships:
 > ***Your SQL***
 >
 > ```sql
-> -- Write your CREATE TABLE statements here
+> CREATE TABLE hotels (
+>     hotel_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     name VARCHAR(200) NOT NULL,
+>     city VARCHAR(100) NOT NULL,
+>     star_rating SMALLINT NOT NULL CHECK (star_rating BETWEEN 1 AND 5),
+>     phone VARCHAR(30) NOT NULL
+> );
 >
+> CREATE TABLE rooms (
+>     hotel_id BIGINT NOT NULL,
+>     room_number VARCHAR(20) NOT NULL,
+>     room_type VARCHAR(50) NOT NULL,
+>     floor SMALLINT NOT NULL CHECK (floor >= 0),
+>     price_per_night NUMERIC(10, 2) NOT NULL CHECK (price_per_night >= 0),
+>     has_balcony BOOLEAN NOT NULL DEFAULT FALSE,
+>     PRIMARY KEY (hotel_id, room_number),
+>     FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE
+> );
 >
+> CREATE TABLE guests (
+>     guest_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     first_name VARCHAR(100) NOT NULL,
+>     last_name VARCHAR(100) NOT NULL,
+>     email VARCHAR(254) NOT NULL UNIQUE,
+>     phone VARCHAR(30),
+>     passport_number VARCHAR(30) UNIQUE
+> );
+>
+> CREATE TABLE services (
+>     service_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     name VARCHAR(100) NOT NULL UNIQUE,
+>     description TEXT,
+>     price NUMERIC(10, 2) NOT NULL CHECK (price >= 0)
+> );
+>
+> CREATE TABLE bookings (
+>     booking_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+>     guest_id BIGINT NOT NULL,
+>     check_in_date DATE NOT NULL,
+>     check_out_date DATE NOT NULL,
+>     total_amount NUMERIC(12, 2) NOT NULL CHECK (total_amount >= 0),
+>     status VARCHAR(20) NOT NULL DEFAULT 'pending'
+>         CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')),
+>     CHECK (check_out_date > check_in_date),
+>     FOREIGN KEY (guest_id) REFERENCES guests (guest_id)
+>         ON DELETE RESTRICT ON UPDATE CASCADE
+> );
+>
+> CREATE TABLE booking_rooms (
+>     booking_id BIGINT NOT NULL,
+>     hotel_id BIGINT NOT NULL,
+>     room_number VARCHAR(20) NOT NULL,
+>     check_in_date DATE NOT NULL,
+>     check_out_date DATE NOT NULL,
+>     PRIMARY KEY (booking_id, hotel_id, room_number),
+>     CHECK (check_out_date > check_in_date),
+>     FOREIGN KEY (booking_id) REFERENCES bookings (booking_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE,
+>     FOREIGN KEY (hotel_id, room_number) REFERENCES rooms (hotel_id, room_number)
+>         ON DELETE RESTRICT ON UPDATE CASCADE
+> );
+>
+> CREATE TABLE booking_services (
+>     booking_id BIGINT NOT NULL,
+>     service_id BIGINT NOT NULL,
+>     date_used DATE NOT NULL,
+>     quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity > 0),
+>     PRIMARY KEY (booking_id, service_id, date_used),
+>     FOREIGN KEY (booking_id) REFERENCES bookings (booking_id)
+>         ON DELETE CASCADE ON UPDATE CASCADE,
+>     FOREIGN KEY (service_id) REFERENCES services (service_id)
+>         ON DELETE RESTRICT ON UPDATE CASCADE
+> );
 > ```
 
 > [!NOTE]
 > ***Your Answer***
 >
-> *(Explain why Room is a weak entity and how its PK reflects this.)*
->
->
->
->
-
----
+> Room is a weak entity because a room is identified only within its owning hotel: a room number such as 101 may exist in many hotels, so it is not globally unique. The rooms primary key is therefore composite, (hotel_id, room_number), using the hotel's primary key together with the room's partial key; hotel_id is also a foreign key to hotels.
 
 ## Exercise 4: Data Type Selection
 
