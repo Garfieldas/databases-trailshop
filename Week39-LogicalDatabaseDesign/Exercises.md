@@ -161,10 +161,9 @@ Answer each question in 2–4 sentences. Reference the relevant theory section.
 
 9. What is an insertion anomaly? Give an example and explain how proper schema design prevents it. *(Section 7)*
 > [!NOTE]
-> ***Your Answer***
->
-> *(Write your answer here.)*
->
+> You cannot insert certain data without inserting other unrelated data.
+> For example if we create book table and put inside it rented_by_customer column. So in these case we will constanly update same record or if multiple users decide to rent same book at same time our logic would break.
+> Proper schema design would elimanate this problem by using normalization, because it will reduce redundancy in our data.
 
 
 
