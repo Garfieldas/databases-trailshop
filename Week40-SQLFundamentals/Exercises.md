@@ -356,51 +356,37 @@ Answer the following questions in your own words using the answer fields below:
 4. Why must you create tables in a specific order? What determines that order?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> Tables must be created in dependency order ,because a foreign key references a table that must already exist. If we try to create order_items before orders and products ,postgres gives error that relation does not exist. The order is determined by foreign keys - tables without dependencies first ,then the tables that reference them.
 
 5. What is the difference between a column-level constraint and a table-level constraint? When _must_ you use a table-level constraint?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> Column-level constraint is written right after the columns data type and applies only to that one column. Table-level constraint is written after all columns and can reference multiple columns. We must use table-level when constraint involves more than one column ,like composite primary key or check that compares two columns.
 
 6. Explain the difference between `DELETE FROM products;` and `TRUNCATE TABLE products;`. When would you prefer each?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> Both remove all rows but DELETE works row by row ,is slower and fires triggers ,while TRUNCATE removes everything instantly and can also reset serial with RESTART IDENTITY. I prefer TRUNCATE when testing and I want to empty the table fast ,and DELETE when I need to remove only specific rows with WHERE.
 
 7. What does `ON DELETE CASCADE` do on a foreign key? Give a real-world scenario where it's appropriate and one where it would be dangerous.
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> ON DELETE CASCADE automatically deletes all child rows when the parent row is deleted. It is appropriate for order_items ,because items have no meaning without their order. It would be dangerous on customers to orders ,because deleting one customer would silently erase the whole order history which is needed for accounting.
 
 8. Why should you store `unit_price` in the `order_items` table instead of just looking it up from the `products` table?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> Because product prices change over time. If we only looked up the current price from products ,old orders would show wrong totals after a price update. Storing unit_price in order_items preserves the historical price the customer actually paid at the moment of purchase.
 
 9. What is the difference between SERIAL and GENERATED ALWAYS AS IDENTITY? Which would you use in a new project and why?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> SERIAL is postgresql-specific shorthand that creates a sequence and sets it as default ,but it can be overridden accidentally by manual inserts. GENERATED ALWAYS AS IDENTITY is the SQL standard way and blocks manual values unless you explicitly override. For a new project I would use identity ,because its the standard and safer.
 
 10. Explain why `UPDATE products SET price = 9.99;` is dangerous. What steps should you take before running any UPDATE statement?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> Because there is no WHERE clause ,so it updates every single row in the table and sets all prices to 9.99. Before running UPDATE I would write the WHERE first ,run a SELECT with the same condition to check which rows are affected ,and wrap it in a transaction so I can ROLLBACK if something goes wrong.
 
 ---
 
