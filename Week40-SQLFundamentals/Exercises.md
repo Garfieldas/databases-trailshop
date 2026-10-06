@@ -122,9 +122,14 @@ Insert the following data:
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
->
->
+> INSERT INTO categories (category_name, description)
+    VALUES
+    
+        ('Footwear', 'Lorem ipsum dolor sit amet'),
+        ('Backpacks', 'Lorem ipsum dolor sit amet'),
+        ('Tents', 'Lorem ipsum dolor sit amet'),
+        ('Clothing', 'Lorem ipsum dolor sit amet'),
+        ('Accessories', 'Lorem ipsum dolor sit amet');
 > ```
 
 **Customers** (at least 5):
