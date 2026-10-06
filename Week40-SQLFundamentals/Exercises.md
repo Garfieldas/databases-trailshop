@@ -682,9 +682,9 @@ CREATE TABLE wishlists (
 
 **Required**
 
-- [ ] All 6 TrailShop tables created successfully
-- [ ] Sample data inserted (at least 5 categories, 5 customers, 10 products, product_categories links, 5 orders, 10 order items)
-- [ ] Theory review questions answered
+- [x] All 6 TrailShop tables created successfully
+- [x] Sample data inserted (at least 5 categories, 5 customers, 10 products, product_categories links, 5 orders, 10 order items)
+- [x] Theory review questions answered
 
 **Recommended practice**
 
