@@ -170,9 +170,22 @@ Insert the following data:
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
+> INSERT INTO products (name, description, price, weight_kg, stock_quantity)
+>     VALUES
+>         ('Hiking Boots', 'Lorem ipsum dolor sit amet.', 120.00, 1.2, 50),
+>         ('Trail Sandals', NULL, 69.99, 0.450, 0),
 >
+>         ('Samsonite Backpack', 'Lorem ipsum dolor sit amet.', 80.00, 0.8, 100),
+>         ('Hydration Pack 12L', 'Lorem ipsum dolor sit amet', 89.90, 0.600, 0),
 >
+>         ('Double Tent', NULL, 150.00, 2.5, 30),
+>         ('Ultralight Bivy Tent', 'Lorem ipsum dolor sit amet', 229.00, 1.100, 0),
+>
+>         ('Rain Jacket', 'Lorem ipsum dolor sit amet.', 90.00, 0.5, 75),
+>         ('Thermal Base Layer Set', 'Lorem ipsum dolor sit amet', 54.95, 0.300, 0),
+>
+>         ('Water Bottle', NULL, 25.00, 0.3, 0),
+>         ('Headlamp 400lm', NULL, 45.50, 0.090, 0);
 > ```
 
 **Product categories:**
@@ -183,9 +196,47 @@ Insert the following data:
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
+> INSERT INTO product_categories (category_id, product_id)
+> SELECT category.category_id, product.product_id
+> FROM categories AS category
+> JOIN products AS product ON
+>     category.category_name = 'Footwear'
+>     AND (
+>         product.name ILIKE '%sandals%'
+>         OR
+>         product.name ILIKE '%boots%'
+>     );
 >
+> INSERT INTO product_categories (category_id, product_id)
+> SELECT category.category_id, product.product_id
+> FROM categories AS category
+> JOIN products AS product
+>     ON product.name ILIKE '%Backpack%'
+>     OR product.name ILIKE '%Pack%'
+> WHERE category.category_name = 'Backpacks';
 >
+> INSERT INTO product_categories (category_id, product_id)
+> SELECT category.category_id, product.product_id
+> FROM categories AS category
+> JOIN products AS product
+>     ON product.name ILIKE '%Tent%'
+> WHERE category.category_name = 'Tents';
+>
+> INSERT INTO product_categories (category_id, product_id)
+> SELECT category.category_id, product.product_id
+> FROM categories AS category
+> JOIN products AS product
+>     ON product.name ILIKE '%Jacket%'
+>     OR product.name ILIKE '%Layer set%'
+> WHERE category.category_name = 'Clothing';
+>
+> INSERT INTO product_categories (category_id, product_id)
+> SELECT category.category_id, product.product_id
+> FROM categories AS category
+> JOIN products AS product
+>     ON product.name ILIKE '%Bottle%'
+>     OR product.name ILIKE '%Headlamp%'
+> WHERE category.category_name = 'Accessories';
 > ```
 
 **Orders** (at least 5):
