@@ -338,23 +338,20 @@ Answer the following questions in your own words using the answer fields below:
 1. What does SQL stand for, and why was the language designed to look like English?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> SQL - stand for structured query language.
+> SQL was designed for readability and that non programmer's could understand
 
 2. Explain the difference between DDL and DML. Give two example commands for each.
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> DDL used for defining database structure ,while DML used to manipulate data inside tables.
+> DDL: ALTER TABLLE used to modify table structure. DML: INSERT INTO used to add new rows for a table.
+> DDL: DROP TABLE used to remove a table. DML: DELETE used to remove row from a table.
 
 3. What is the difference between DCL and TCL? When would you use each?
 
 > [!NOTE]
-> **_Your Answer_**
->
-> _(Write your answer here.)_
+> DCL manage permissions and TCL manage transactions. DCL we used to manage access for users inside database. TCL we use to manage ,that if transaction fails to rollback.
 
 4. Why must you create tables in a specific order? What determines that order?
 
