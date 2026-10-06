@@ -84,3 +84,28 @@ JOIN products AS product
     ON product.name ILIKE '%Bottle%'
     OR product.name ILIKE '%Headlamp%'
 WHERE category.category_name = 'Accessories';
+
+INSERT INTO orders (status, shipping_address, customer_id)
+    VALUES
+        ('pending', 'Mikpolku 3, 50100 Mikkeli, Finland', 1),
+        ('paid', 'Satamakatu 12, 00160 Helsinki, Finland', 3),
+        ('shipped', '14 O''Connell Street, D01 Dublin, Ireland', 4),
+        ('delivered', 'Rua Augusta 500, 01304-001 São Paulo, Brazil', 5),
+        ('cancelled', NULL, 2);
+
+INSERT INTO order_items (order_id, product_id, quantity, unit_price)
+    VALUES
+        (1, 1, 1, 120.00),
+        (1, 9, 2, 25.00),
+        (1, 10, 1, 45.50),
+
+        (2, 6, 1, 229.00),
+
+        (3, 3, 1, 80.00),
+        (3, 8, 2, 54.95),
+
+        (4, 5, 1, 150.00),
+        (4, 4, 1, 89.90),
+        (4, 7, 1, 90.00),
+
+        (5, 2, 1, 69.99);
