@@ -20,9 +20,13 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT DISTINCT p.*
+   > FROM products as p
+   > JOIN product_categories as pc
+   > ON pc.product_id = p.product_id
+   > JOIN categories as c
+   > ON pc.category_id = c.category_id
+   > WHERE c.category_name = 'Footwear';
    > ```
 
 2. Find all products priced between €50 and €150, sorted by price ascending.
@@ -31,8 +35,9 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
+   > SELECT * FROM products
+   > WHERE price >= 50 OR price <= 150
+   > ORDER BY price ASC;
    >
    > ```
 
@@ -42,8 +47,8 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
+   > SELECT * FROM customers
+   > WHERE last_name ILIKE 'M%' OR last_name ILIKE 'K%';
    >
    > ```
 
@@ -53,9 +58,9 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT * FROM orders
+   > WHERE status IN ('pending', 'shipped')
+   > ORDER BY order_date DESC;
    > ```
 
 5. Find all products that have the word 'Pro' or 'pro' somewhere in their name.
@@ -63,8 +68,8 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
+   > SELECT * FROM products
+   > WHERE name ILIKE '%pro%';
    >
    > ```
 
@@ -76,8 +81,8 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
->
+>  SELECT COUNT(*)
+> FROM products;
 >
 > ```
 
@@ -87,8 +92,8 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
+   > SELECT ROUND(AVG(price), 2)
+   > FROM products;
    >
    > ```
 
@@ -98,8 +103,10 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
+   > SELECT 
+   > MIN(price) as smallest_price,
+   > MAX(price) as biggest_price
+   > FROM products;
    >
    > ```
 
@@ -109,9 +116,17 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT
+   > c.first_name || ' ' || c.last_name AS customer_name,
+   > COUNT(o.order_id) AS order_count
+   > from customers AS c
+   > LEFT JOIN orders AS o
+   > ON o.customer_id = c.customer_id
+   > GROUP BY
+   > c.customer_id,
+   > c.first_name,
+   > c.last_name
+   > ORDER BY order_count DESC;
    > ```
 
 10. What is the total revenue (sum of quantity × unit_price from order_items) for each order status?
