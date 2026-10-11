@@ -92,3 +92,19 @@ WHERE NOT EXISTS
 (SELECT *
 FROM orders
 WHERE c.customer_id = orders.customer_id);
+
+SELECT 
+    c.category_id,
+    c.category_name,
+    COUNT(p) AS products,
+    ROUND(AVG(p.price), 2) AS average_price,
+    SUM(p.price * p.stock_quantity) AS inventory_value
+FROM categories as c
+JOIN product_categories as pc
+ON pc.category_id = c.category_id
+JOIN products as p
+ON pc.product_id = p.product_id
+GROUP BY
+c.category_id,
+c.category_name
+HAVING SUM(p.price * p.stock_quantity) > 500;

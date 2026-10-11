@@ -222,9 +222,21 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
     > **_Your SQL_**
     >
     > ```sql
-    > -- Write your query here
-    >
-    >
+   > SELECT 
+   >  c.category_id,
+   >  c.category_name,
+   >  COUNT(p) AS products,
+   >  ROUND(AVG(p.price), 2) AS average_price,
+   >  SUM(p.price * p.stock_quantity) AS inventory_value
+   > FROM categories as c
+   > JOIN product_categories as pc
+   > ON pc.category_id = c.category_id
+   > JOIN products as p
+   > ON pc.product_id = p.product_id
+   > GROUP BY
+   > c.category_id,
+   > c.category_name
+   > HAVING SUM(p.price * p.stock_quantity) > 500;
     > ```
 
 ---
