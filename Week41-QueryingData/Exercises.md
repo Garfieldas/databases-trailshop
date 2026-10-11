@@ -172,9 +172,14 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
     > **_Your SQL_**
     >
     > ```sql
-    > -- Write your query here
-    >
-    >
+   > SELECT
+   > c.first_name || ' ' || c.last_name AS full_name,
+   > o.order_date AS order_date,
+   > o.status AS order_status
+   > FROM customers AS c
+   > JOIN orders AS o
+   > ON
+   > o.customer_id = c.customer_id;
     > ```
 
 13. Show a detailed breakdown of order #1: product name, quantity, unit price, and line total.

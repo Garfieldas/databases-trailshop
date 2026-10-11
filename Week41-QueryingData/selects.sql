@@ -64,3 +64,13 @@ JOIN product_categories AS pc
 JOIN categories AS c
 	ON pc.category_id = c.category_id
 ORDER BY product_name, category_name;
+
+SELECT
+    c.first_name || ' ' || c.last_name AS full_name,
+    o.order_date AS order_date,
+    o.status AS order_status
+
+FROM customers AS c
+JOIN orders AS o
+ON
+o.customer_id = c.customer_id;
