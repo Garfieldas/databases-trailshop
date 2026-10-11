@@ -43,3 +43,13 @@ c.customer_id,
 c.first_name,
 c.last_name
 ORDER BY order_count DESC;
+
+SELECT
+o.status,
+SUM(item.quantity * item.unit_price) AS total_revenue
+FROM orders AS o
+JOIN order_items as item
+ON
+o.order_id = item.order_id
+GROUP BY o.status
+ORDER BY total_revenue DESC;
