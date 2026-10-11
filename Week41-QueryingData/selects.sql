@@ -74,3 +74,21 @@ FROM customers AS c
 JOIN orders AS o
 ON
 o.customer_id = c.customer_id;
+
+SELECT 
+    p.name AS product_name,
+    SUM(oi.quantity * oi.unit_price) AS total
+FROM order_items AS oi
+JOIN products AS p
+ON oi.product_id = p.product_id
+WHERE oi.order_id = 1
+GROUP BY p.name;
+
+SELECT
+c.customer_id,
+c.first_name || ' ' || c.last_name AS full_name
+FROM customers as c
+WHERE NOT EXISTS
+(SELECT *
+FROM orders
+WHERE c.customer_id = orders.customer_id);

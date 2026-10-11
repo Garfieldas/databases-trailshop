@@ -188,7 +188,14 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
     > **_Your SQL_**
     >
     > ```sql
-    > -- Write your query here
+    > SELECT 
+    > p.name AS product_name,
+    > SUM(oi.quantity * oi.unit_price) AS total
+    > FROM order_items AS oi
+    > JOIN products AS p
+    > ON oi.product_id = p.product_id
+    > WHERE oi.order_id = 1
+    > GROUP BY p.name;
     >
     >
     > ```
@@ -199,8 +206,14 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
     > **_Your SQL_**
     >
     > ```sql
-    > -- Write your query here
-    >
+    > SELECT
+    > c.customer_id,
+    > c.first_name || ' ' || c.last_name AS full_name
+    > FROM customers AS c
+    > WHERE NOT EXISTS
+    > (SELECT *
+    > FROM orders
+    > WHERE c.customer_id = orders.customer_id);
     >
     > ```
 
