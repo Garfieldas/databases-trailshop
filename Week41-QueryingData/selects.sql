@@ -53,3 +53,14 @@ ON
 o.order_id = item.order_id
 GROUP BY o.status
 ORDER BY total_revenue DESC;
+
+SELECT
+	p.product_id,
+	p.name AS product_name,
+	c.category_name as category_name
+FROM products AS p
+JOIN product_categories AS pc
+	ON pc.product_id = p.product_id
+JOIN categories AS c
+	ON pc.category_id = c.category_id
+ORDER BY product_name, category_name;

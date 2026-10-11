@@ -154,9 +154,16 @@ Use the TrailShop database you created in Week 40. Write SQL queries to answer e
     > **_Your SQL_**
     >
     > ```sql
-    > -- Write your query here
-    >
-    >
+   > SELECT
+   >     p.product_id,
+   >     p.name AS product_name,
+   >     c.category_name as category_name
+   > FROM products AS p
+   > JOIN product_categories AS pc
+   >     ON pc.product_id = p.product_id
+   > JOIN categories AS c
+   >     ON pc.category_id = c.category_id
+   > ORDER BY category_name, product_name;
     > ```
 
 12. Show each order with the customer's full name, order date, and status.
