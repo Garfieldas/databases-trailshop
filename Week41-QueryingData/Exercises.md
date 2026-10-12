@@ -303,7 +303,26 @@ Answer in your own words:
 > [!NOTE]
 > **_Your Answer_**
 >
-> LEFT JOIN - returns only rows that have matching values in both tables. INNER JOIN - Returns only rows that have matching values in both tables.
+> An `INNER JOIN` returns only rows where there is a matching value in both tables. Use it when you only want records that are related in both tables. For example, this lists only customers who have placed an order:
+>
+> ```sql
+> SELECT c.first_name, c.last_name, o.order_id
+> FROM customers AS c
+> INNER JOIN orders AS o
+>     ON o.customer_id = c.customer_id;
+> ```
+>
+> A `LEFT JOIN` returns every row from the table on the left, including rows with no match in the right table. The right table's columns are `NULL` when there is no match. Use it when you need to keep all records from the left table, such as finding customers who have not placed any orders:
+>
+> ```sql
+> SELECT c.first_name, c.last_name
+> FROM customers AS c
+> LEFT JOIN orders AS o
+>     ON o.customer_id = c.customer_id
+> WHERE o.order_id IS NULL;
+> ```
+>
+> In short, choose INNER JOIN for matching records only, and LEFT JOIN when all records from the left table must be included.
 
 5. Why should you avoid SELECT \* in production code?
 
