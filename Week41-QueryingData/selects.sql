@@ -1,0 +1,110 @@
+SELECT DISTINCT p.*
+FROM products as p
+JOIN product_categories as pc
+ON pc.product_id = p.product_id
+JOIN categories as c
+ON pc.category_id = c.category_id
+WHERE c.category_name = 'Footwear';
+
+
+SELECT * FROM products
+WHERE price >= 50 OR price <= 150
+ORDER BY price ASC;
+
+SELECT * FROM customers
+WHERE last_name ILIKE 'M%' OR last_name ILIKE 'K%';
+
+SELECT * FROM orders
+WHERE status IN ('pending', 'shipped')
+ORDER BY order_date DESC;
+
+SELECT * FROM products
+WHERE name ILIKE '%pro%';
+
+SELECT COUNT(*)
+FROM products;
+
+SELECT ROUND(AVG(price), 2)
+FROM products;
+
+SELECT 
+MIN(price) as smallest_price,
+MAX(price) as biggest_price
+FROM products;
+
+SELECT
+c.first_name || ' ' || c.last_name AS customer_name,
+COUNT(o.order_id) AS order_count
+from customers AS c
+LEFT JOIN orders AS o
+ON o.customer_id = c.customer_id
+GROUP BY
+c.customer_id,
+c.first_name,
+c.last_name
+ORDER BY order_count DESC;
+
+SELECT
+o.status,
+SUM(item.quantity * item.unit_price) AS total_revenue
+FROM orders AS o
+JOIN order_items as item
+ON
+o.order_id = item.order_id
+GROUP BY o.status
+ORDER BY total_revenue DESC;
+
+SELECT
+	p.product_id,
+	p.name AS product_name,
+	c.category_name as category_name
+FROM products AS p
+JOIN product_categories AS pc
+	ON pc.product_id = p.product_id
+JOIN categories AS c
+	ON pc.category_id = c.category_id
+ORDER BY product_name, category_name;
+
+SELECT
+    c.first_name || ' ' || c.last_name AS full_name,
+    o.order_date AS order_date,
+    o.status AS order_status
+
+FROM customers AS c
+JOIN orders AS o
+ON
+o.customer_id = c.customer_id;
+
+SELECT 
+    p.name AS product_name,
+    SUM(oi.quantity * oi.unit_price) AS total
+FROM order_items AS oi
+JOIN products AS p
+ON oi.product_id = p.product_id
+WHERE oi.order_id = 1
+GROUP BY p.name;
+
+SELECT
+c.customer_id,
+c.first_name || ' ' || c.last_name AS full_name
+FROM customers as c
+WHERE NOT EXISTS
+(SELECT *
+FROM orders
+WHERE c.customer_id = orders.customer_id);
+
+SELECT 
+    c.category_id,
+    c.category_name,
+    COUNT(p) AS products,
+    ROUND(AVG(p.price), 2) AS average_price,
+    SUM(p.price * p.stock_quantity) AS inventory_value
+FROM categories as c
+JOIN product_categories as pc
+ON pc.category_id = c.category_id
+JOIN products as p
+ON pc.product_id = p.product_id
+GROUP BY
+c.category_id,
+c.category_name
+HAVING SUM(p.price * p.stock_quantity) > 500;
