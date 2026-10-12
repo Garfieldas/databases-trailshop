@@ -250,56 +250,89 @@ Answer in your own words:
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> SQL does not execute in the same order we usually write the statements. The logical order is:
+>
+> 1. FROM — choose the table(s) involved.
+> 2. WHERE — filter individual rows before grouping.
+> 3. GROUP BY — group rows with the same values.
+> 4. HAVING — filter groups after aggregation.
+> 5. SELECT — choose the columns and calculate expressions.
+> 6. ORDER BY — sort the final result.
+> 7. LIMIT — restrict how many rows are returned.
+>
+> This matters because it explains why you cannot use an alias created in SELECT in WHERE, and why HAVING is used only after GROUP BY.
 
 2. What is the difference between WHERE and HAVING? Give an example of when you would use each.
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> WHERE filters rows before aggregation. It is used with normal SELECT queries and works on individual records.
+>
+> Example:
+>
+> ```sql
+> SELECT *
+> FROM products
+> WHERE price > 100;
+> ```
+>
+> This returns only products whose price is greater than 100.
+>
+> HAVING filters groups after aggregation, so it is used together with GROUP BY.
+>
+> Example:
+>
+> ```sql
+> SELECT category_id, COUNT(*) AS number_of_products
+> FROM products
+> GROUP BY category_id
+> HAVING COUNT(*) > 5;
+> ```
+>
+> This shows only categories that contain more than 5 products. In other words, WHERE filters rows, while HAVING filters grouped results.
 
 3. Explain the difference between COUNT(\*), COUNT(column), and COUNT(DISTINCT column).
 
 > [!NOTE]
 > **_Your Answer_**
->
-> _(Write your answer here.)_
+> 1 - Number of rows, 2- number of rows that has not null column specified, 3- number of distinct rows that has columns not null.
 
 4. What is the difference between INNER JOIN and LEFT JOIN? When would you choose one over the other?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> LEFT JOIN - returns only rows that have matching values in both tables. INNER JOIN - Returns only rows that have matching values in both tables.
 
 5. Why should you avoid SELECT \* in production code?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> If columns are added/removed, query returns different results.
+> More data transfered than needed.
+> It makes code harder to understand.
 
 6. What does DISTINCT do? On what level does it operate (columns or entire rows)?
 
 > [!NOTE]
 > **_Your Answer_**
->
-> _(Write your answer here.)_
+> DISTINTC remove duplicated rows. It operates for entire rows
 
 7. Can you use a column alias in a WHERE clause? Why or why not?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> You can not use alias inside WHERE clause, due tue sql logical execution order.
 >
 > 8. Explain what happens when you GROUP BY a column and there's a column in SELECT that isn't aggregated and isn't in GROUP BY.
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> SQL returns an error because it cannot determine which value to show for that column within each group.
 
 ---
 
