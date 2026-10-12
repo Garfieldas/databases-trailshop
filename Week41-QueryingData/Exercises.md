@@ -685,9 +685,9 @@ ORDER BY total_spent DESC NULLS LAST;
 
 **Required**
 
-- [ ] All 15 business questions answered with working SQL
-- [ ] Theory review questions answered in your own words
-- [ ] Results of the business questions verified by running them against your TrailShop database
+- [X] All 15 business questions answered with working SQL
+- [X] Theory review questions answered in your own words
+- [X] Results of the business questions verified by running them against your TrailShop database
 
 **Recommended practice**
 
