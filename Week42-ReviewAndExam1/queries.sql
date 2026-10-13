@@ -42,3 +42,14 @@ GROUP BY
 c.category_id, category_name
 ORDER BY
 total_revenue DESC;
+
+SELECT
+p.name AS product_name,
+COALESCE(SUM(sales.quantity), 0) AS sold
+FROM pet_products AS p
+LEFT JOIN pet_sales AS sales
+ON
+sales.product_id = p.product_id
+GROUP BY p.product_id, product_name
+ORDER BY sold DESC
+LIMIT 1;
