@@ -317,7 +317,9 @@ Name three problems of file-based data management and explain how a database sol
 
 > [!NOTE]
 > **_Your Answer_**
->
+> Data redundancy - everytime somoene updates file everyone have to update it to match versions
+> Concurancy - File supports only one operation at a same time.
+> Permissions - everyone can modify file however they want
 > _(Write your answer here.)_
 
 ### 3.2 (Week 37 — Theory)
@@ -327,7 +329,7 @@ What is the difference between a candidate key and a primary key? Can a table ha
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> primary key is a unique identifier for table ,that cannot be duplicated. candidate keys are potential primary keys such as user email. Table can have multiple candidate keys.
 
 ### 3.3 (Week 37 — Theory)
 
@@ -335,7 +337,7 @@ State the referential integrity rule. What happens in PostgreSQL if you try to I
 
 > [!NOTE]
 > **_Your Answer_**
->
+> Referential rule quaranties that every foreign key matches to a real primary key from another table. It will show foreign key error.
 > _(Write your answer here.)_
 
 ### 3.4 (Week 38 — Design)
@@ -368,8 +370,8 @@ Write an ALTER TABLE statement that adds a `discount_percent NUMERIC(4,2) CHECK 
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
->
+> ALTER TABLE products
+> ADD COLUMN discount_percent NUMERIC(4,2) CHECK (discount_percent BETWEEN 0 AND 50); 
 >
 > ```
 
@@ -381,8 +383,11 @@ Write an INSERT statement that adds 3 rows to a `books` table with columns: titl
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
->
+> INSERT INTO books (title, author, isbn, price)
+> VALUES
+> ('Book 1', 'John Doe', '123', 100),
+> ('Book 2', 'John Spear', '124', 30),
+> ('Book 3', 'John Jade', '125', 40);
 >
 > ```
 
@@ -401,7 +406,7 @@ HAVING COUNT(p.product_id) = 0;
 
 > [!NOTE]
 > **_Your Answer_**
->
+> List all categories that has no products assigned to them
 > _(Write your answer here.)_
 
 ### 3.9 (Week 41 — Querying)
