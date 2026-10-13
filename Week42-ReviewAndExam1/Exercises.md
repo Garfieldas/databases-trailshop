@@ -235,7 +235,20 @@ WHERE s.sale_id IS NULL;
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
+> SELECT
+> c.name AS category_name,
+> COALESCE(SUM(sales.quantity * sales.unit_price), 0) AS total_revenue
+> FROM pet_categories AS c
+> LEFT JOIN pet_products AS p
+> ON
+> p.category_id = c.category_id
+> LEFT JOIN pet_sales AS sales
+> ON
+> sales.product_id = p.product_id
+> GROUP BY
+> c.category_id, category_name
+> ORDER BY
+> total_revenue DESC;
 >
 >
 > ```
