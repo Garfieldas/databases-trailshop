@@ -201,7 +201,17 @@ ORDER BY total_spent DESC;
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
+> SELECT DISTINCT
+> c.name AS category_name
+> FROM pet_categories AS c
+> JOIN pet_products AS p
+> ON c.category_id = p.category_id
+> LEFT JOIN
+> pet_sales AS sales
+> ON
+> sales.product_id = p.product_id
+> WHERE
+> sales.product_id IS NULL;
 >
 >
 > ```

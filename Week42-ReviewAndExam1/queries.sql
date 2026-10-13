@@ -15,3 +15,15 @@ ON
 c.customer_id = sales.customer_id
 GROUP BY c.customer_id, c.first_name, c.last_name
 ORDER BY total DESC;
+
+SELECT DISTINCT
+c.name AS category_name
+FROM pet_categories AS c
+JOIN pet_products AS p
+ON c.category_id = p.category_id
+LEFT JOIN
+pet_sales AS sales
+ON
+sales.product_id = p.product_id
+WHERE
+sales.product_id IS NULL;
