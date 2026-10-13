@@ -167,7 +167,16 @@ ORDER BY pc.name, pp.price;
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your query here
+> SELECT 
+> c.first_name,
+> c.last_name,
+> SUM(sales.quantity * sales.unit_price) AS total
+> FROM pet_customers AS c
+> JOIN pet_sales AS sales
+> ON 
+> c.customer_id = sales.customer_id
+> GROUP BY c.customer_id, c.first_name, c.last_name
+> ORDER BY total DESC;
 >
 >
 > ```
