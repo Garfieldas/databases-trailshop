@@ -53,3 +53,47 @@ sales.product_id = p.product_id
 GROUP BY p.product_id, product_name
 ORDER BY sold DESC
 LIMIT 1;
+
+
+CREATE TABLE IF NOT EXISTS customers(
+    customer_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(250) NOT NULL,
+    email VARCHAR(250) UNIQUE NOT NULL,
+    phone VARCHAR(250)
+);
+
+CREATE TABLE IF NOT EXISTS product_categories(
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(250) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS products(
+    product_id SERIAL PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    description VARCHAR(1000),
+    price NUMERIC(10, 2) NOT NULL CHECK(price >= 0),
+    stock_quantity INTEGER NOT NULL DEFAULT 0
+    CHECK(stock_quantity >= 0),
+    category_id INTEGER NOT NULL REFERENCES product_categories(category_id),
+
+    CONSTRAINT fk_pc FOREIGN KEY (category_id) REFERENCES product_categories(category_id)
+    ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS sales(
+    sale_id SERIAL PRIMARY KEY,
+    customer_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL
+    CHECK (quantity > 0),
+    price NUMERIC(10, 2) CHECK(price >= 0),
+    sale_date TIMESTAMPTZ DEFAULT now(),
+
+    CONSTRAINT
+    fk_c FOREIGN KEY(customer_id) REFERENCES customers(customer_id),
+
+    CONSTRAINT
+    fk_p FOREIGN KEY(product_id) REFERENCES products(product_id)
+
+);
