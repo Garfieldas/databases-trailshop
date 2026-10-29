@@ -19,9 +19,10 @@ Write the following queries using subqueries:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT *
+   > FROM products
+   > WHERE
+   > price > (SELECT AVG(price) FROM products);
    > ```
 2. Find all customers who have placed more than 2 orders (use a subquery in WHERE with IN).
    > [!NOTE]
