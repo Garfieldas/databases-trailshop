@@ -192,21 +192,21 @@ Answer these in your own words (2–4 sentences each):
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A view is a named query stored in a database. Views removes abstraction by allowing to write complex query just once and keeping it. More over it provides consistency so that everyone can use a same business logic.
 >
 > 7. What does `WITH CHECK OPTION` do on an updatable view?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> Prevents INSERT/UPDATE through a view if the new row wouldn't be visible through the view.
 
 8. How does a CTE differ from a derived table (subquery in FROM)? What's the main advantage of CTEs?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A CTE is a named temporary result set available within a single SQL statement. A derived table is a subquery used in the FROM clause. CTEs often make complex queries easier to read and explain.
 
 ---
 
@@ -425,10 +425,10 @@ For each pair, discuss: readability, performance (in PostgreSQL), and when you'd
 
 **Required**
 
-- [ ] TrailShop queries written for subqueries, EXISTS, and CASE expressions
-- [ ] Three views created (`v_product_catalog`, `v_customer_summary`, `v_monthly_revenue`)
-- [ ] UNION/EXCEPT and CTE queries written
-- [ ] Theory review questions answered
+- [X] TrailShop queries written for subqueries, EXISTS, and CASE expressions
+- [X] Three views created (`v_product_catalog`, `v_customer_summary`, `v_monthly_revenue`)
+- [X] UNION/EXCEPT and CTE queries written
+- [X] Theory review questions answered
 
 **Recommended practice**
 
