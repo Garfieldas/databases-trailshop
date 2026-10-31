@@ -58,3 +58,13 @@ WHERE NOT EXISTS(
     FROM order_items AS oi
     WHERE oi.product_id = p.product_id
 );
+
+SELECT 
+name,
+price,
+CASE 
+WHEN price < 25 THEN ('Budget')
+WHEN price >= 25 AND price <= 74.99 THEN ('Standart')
+WHEN price >= 75 THEN ('Premium')
+END AS price_tier
+FROM products;
