@@ -132,3 +132,8 @@ FROM orders AS o
 LEFT JOIN order_items AS oi
 ON oi.order_id = o.order_id
 GROUP BY month;
+
+SELECT name 
+FROM products
+UNION
+SELECT category_name FROM categories;
