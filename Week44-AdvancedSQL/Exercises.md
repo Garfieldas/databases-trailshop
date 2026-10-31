@@ -156,7 +156,8 @@ Answer these in your own words (2–4 sentences each):
 
 > [!NOTE]
 > **_Your Answer_**
->
+> Inner join returns only matching rows from both sides. Left join returns all rows from left side and any matching rows from left side.
+> Use inner join when we want to only find matching from both tables. Use lefft join when we need to see both table info even thougt on right side it will be empty.
 > _(Write your answer here.)_
 
 2. Explain what a correlated subquery is. Why can it be slower than an uncorrelated subquery?
@@ -171,21 +172,20 @@ Answer these in your own words (2–4 sentences each):
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
-
+> IN do a lookup between column values choices,while exists searches for True or False by finding entire row matching criteria.
 4. What rules must two SELECT statements follow to be combined with UNION?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> Both Select statements must return same number of columns. Have compatible data types.
 
 5. Explain the difference between UNION and UNION ALL. When would you use each?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> Union find all results and remove duplicates. Union ALL find all results and keep duplicates. We use UNION ALL when we need dupliocates and Union when we not need them.
 
 6. What is a view? Name two advantages of using views.
 
