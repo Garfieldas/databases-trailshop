@@ -29,3 +29,32 @@ JOIN product_categories AS pc
     ON pc.product_id = p.product_id
 JOIN categories AS c
     ON c.category_id = pc.category_id;
+
+SELECT c.first_name, c.last_name
+FROM customers AS c
+JOIN products AS p
+WHERE EXISTS (
+    SELECT 1
+    FROM orders AS o
+    JOIN order_items AS oi
+    ON
+    oi.order_id = o.order_id
+    JOIN product_categories AS pc
+    ON
+     pc.product_id = oi.product_id
+    JOIN categories AS cat
+    ON
+    cat.category_id = pc.category_id
+    WHERE o.customer_id = c.customer_id
+    AND
+    cat.category_name = 'Footwear'
+);
+
+SELECT 
+p.name
+FROM products AS p
+WHERE NOT EXISTS(
+    SELECT 1
+    FROM order_items AS oi
+    WHERE oi.product_id = p.product_id
+);
