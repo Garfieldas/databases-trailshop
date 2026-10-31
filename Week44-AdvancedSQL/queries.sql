@@ -68,3 +68,67 @@ WHEN price >= 25 AND price <= 74.99 THEN ('Standart')
 WHEN price >= 75 THEN ('Premium')
 END AS price_tier
 FROM products;
+
+SELECT
+COUNT(
+    CASE
+    WHEN status = 'pending' THEN 1 END
+) AS pending,
+COUNT(
+    CASE
+    WHEN status = 'paid' THEN 1 END
+) AS paid,
+COUNT(
+    CASE
+    WHEN status = 'shipped' THEN 1 END
+) AS shipped,
+COUNT(
+    CASE
+    WHEN status = 'delivered' THEN 1 END
+) AS delivered,
+COUNT(
+    CASE
+    WHEN status = 'cancelled' THEN 1 END
+) AS cancelled
+FROM orders;
+
+CREATE VIEW v_product_catalog AS
+SELECT
+p.name AS product_name,
+c.category_name AS category_name, 
+p.price AS product_price,
+CASE
+WHEN stock_quantity = 0 THEN ('Out of Stock')
+WHEN stock_quantity <= 5 THEN ('Low Stock')
+WHEN stock_quantity > 5 THEN ('In Stock')
+END AS stock_status
+FROM products AS p
+LEFT JOIN product_categories AS pc
+ON
+p.product_id = pc.product_id
+LEFT JOIN categories AS c
+ON 
+c.category_id = pc.category_id
+ORDER BY category_name;
+
+CREATE VIEW v_customer_summary AS
+SELECT
+c.first_name || '' || c.last_name AS full_name,
+c.email,
+COUNT(o.order_id) AS number_of_orders,
+SUM(oi.quantity * oi.unit_price) AS total_spent
+FROM customers AS c
+LEFT JOIN orders AS o
+ON o.customer_id = c.customer_id
+LEFT JOIN order_items AS oi
+ON oi.order_id = o.order_id
+GROUP BY c.customer_id;
+
+CREATE VIEW v_monthly_revenue AS
+SELECT
+DATE_TRUNC('month', o.order_date) AS month,
+SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM orders AS o
+LEFT JOIN order_items AS oi
+ON oi.order_id = o.order_id
+GROUP BY month;
