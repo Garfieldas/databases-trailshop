@@ -29,18 +29,33 @@ Write the following queries using subqueries:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT first_name, last_name
+   > FROM customers
+   > WHERE customer_id IN (
+   >     SELECT customer_id
+   >     FROM orders
+   >     GROUP BY customer_id
+   >     HAVING COUNT(*) > 2
+   > );
    > ```
 3. Show each product's name, price, and how much it differs from its category's average price (use a correlated subquery or derived table).
    > [!NOTE]
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT
+   >     p.name,
+   >     p.price,
+   >     p.price - (
+   >         SELECT AVG(p2.price)
+   >         FROM products AS p2
+   >         JOIN product_categories AS pc2
+   >             ON pc2.product_id = p2.product_id
+   >         WHERE pc2.category_id = pc.category_id
+   >     ) AS difference_from_category_average
+   > FROM products AS p
+   > JOIN product_categories AS pc
+   >     ON pc.product_id = p.product_id;
    > ```
 
 ### Task 1.2: EXISTS
@@ -50,18 +65,33 @@ Write the following queries using subqueries:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT c.first_name, c.last_name
+   > FROM customers AS c
+   > WHERE EXISTS (
+   >     SELECT 1
+   >     FROM orders AS o
+   >     JOIN order_items AS oi
+   >         ON oi.order_id = o.order_id
+   >     JOIN product_categories AS pc
+   >         ON pc.product_id = oi.product_id
+   >     JOIN categories AS cat
+   >         ON cat.category_id = pc.category_id
+   >     WHERE o.customer_id = c.customer_id
+   >     AND cat.category_name = 'Footwear'
+   > );
    > ```
 2. Use `NOT EXISTS` to find all products that have never been ordered.
    > [!NOTE]
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT p.name
+   > FROM products AS p
+   > WHERE NOT EXISTS (
+   >     SELECT 1
+   >     FROM order_items AS oi
+   >     WHERE oi.product_id = p.product_id
+   > );
    > ```
 
 ### Task 1.3: CASE Expressions
@@ -71,18 +101,28 @@ Write the following queries using subqueries:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT
+   >     name,
+   >     price,
+   >     CASE
+   >         WHEN price < 25 THEN 'Budget'
+   >         WHEN price < 75 THEN 'Standard'
+   >         ELSE 'Premium'
+   >     END AS price_tier
+   > FROM products;
    > ```
 2. Write a query that counts orders by status using CASE inside COUNT.
    > [!NOTE]
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT
+   >     COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending,
+   >     COUNT(CASE WHEN status = 'paid' THEN 1 END) AS paid,
+   >     COUNT(CASE WHEN status = 'shipped' THEN 1 END) AS shipped,
+   >     COUNT(CASE WHEN status = 'delivered' THEN 1 END) AS delivered,
+   >     COUNT(CASE WHEN status = 'cancelled' THEN 1 END) AS cancelled
+   > FROM orders;
    > ```
 
 ### Task 1.4: Create Three Views
@@ -99,9 +139,52 @@ Verify each view works with a simple SELECT.
 > **_Your SQL_**
 >
 > ```sql
-> -- Write your CREATE VIEW statements here
+> CREATE OR REPLACE VIEW v_product_catalog AS
+> SELECT
+>     p.name AS product_name,
+>     c.category_name,
+>     p.price,
+>     CASE
+>         WHEN p.stock_quantity = 0 THEN 'Out of Stock'
+>         WHEN p.stock_quantity < 5 THEN 'Low Stock'
+>         ELSE 'In Stock'
+>     END AS stock_status
+> FROM products AS p
+> JOIN product_categories AS pc
+>     ON pc.product_id = p.product_id
+> JOIN categories AS c
+>     ON c.category_id = pc.category_id;
 >
+> SELECT *
+> FROM v_product_catalog;
 >
+> CREATE OR REPLACE VIEW v_customer_summary AS
+> SELECT
+>     c.first_name || ' ' || c.last_name AS full_name,
+>     c.email,
+>     COUNT(DISTINCT o.order_id) AS number_of_orders,
+>     COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS total_spent
+> FROM customers AS c
+> LEFT JOIN orders AS o
+>     ON o.customer_id = c.customer_id
+> LEFT JOIN order_items AS oi
+>     ON oi.order_id = o.order_id
+> GROUP BY c.customer_id, c.first_name, c.last_name, c.email;
+>
+> SELECT *
+> FROM v_customer_summary;
+>
+> CREATE OR REPLACE VIEW v_monthly_revenue AS
+> SELECT
+>     DATE_TRUNC('month', o.order_date) AS month,
+>     SUM(oi.quantity * oi.unit_price) AS total_revenue
+> FROM orders AS o
+> JOIN order_items AS oi
+>     ON oi.order_id = o.order_id
+> GROUP BY DATE_TRUNC('month', o.order_date);
+>
+> SELECT *
+> FROM v_monthly_revenue;
 > ```
 
 ### Task 1.5: UNION
@@ -111,18 +194,46 @@ Verify each view works with a simple SELECT.
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > SELECT p.name
+   > FROM products AS p
+   > JOIN product_categories AS pc
+   >     ON pc.product_id = p.product_id
+   > JOIN categories AS c
+   >     ON c.category_id = pc.category_id
+   > WHERE c.category_name = 'Footwear'
+   > UNION
+   > SELECT p.name
+   > FROM products AS p
+   > JOIN product_categories AS pc
+   >     ON pc.product_id = p.product_id
+   > JOIN categories AS c
+   >     ON c.category_id = pc.category_id
+   > WHERE c.category_name = 'Accessories';
    > ```
 2. Write a query using EXCEPT to find categories that have products but no orders.
    > [!NOTE]
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > WITH categories_with_products AS (
+   >     SELECT DISTINCT category_id
+   >     FROM product_categories
+   > ),
+   > categories_with_orders AS (
+   >     SELECT DISTINCT pc.category_id
+   >     FROM order_items AS oi
+   >     JOIN product_categories AS pc
+   >         ON pc.product_id = oi.product_id
+   > )
+   > SELECT c.category_name
+   > FROM categories AS c
+   > WHERE c.category_id IN (
+   >     SELECT category_id
+   >     FROM categories_with_products
+   >     EXCEPT
+   >     SELECT category_id
+   >     FROM categories_with_orders
+   > );
    > ```
 
 ### Task 1.6: CTE
@@ -132,18 +243,49 @@ Verify each view works with a simple SELECT.
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > WITH category_revenue AS (
+   >     SELECT
+   >         c.category_id,
+   >         c.category_name,
+   >         SUM(oi.quantity * oi.unit_price) AS total_revenue
+   >     FROM categories AS c
+   >     JOIN product_categories AS pc
+   >         ON pc.category_id = c.category_id
+   >     JOIN order_items AS oi
+   >         ON oi.product_id = pc.product_id
+   >     GROUP BY c.category_id, c.category_name
+   > )
+   > SELECT *
+   > FROM category_revenue
+   > WHERE total_revenue > (
+   >     SELECT AVG(total_revenue)
+   >     FROM category_revenue
+   > );
    > ```
 2. Write a query with two CTEs: one for customer order counts, another for average order count, then find "top customers" (above average).
    > [!NOTE]
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
-   >
-   >
+   > WITH customer_order_counts AS (
+   >     SELECT
+   >         c.customer_id,
+   >         c.first_name,
+   >         c.last_name,
+   >         COUNT(o.order_id) AS order_count
+   >     FROM customers AS c
+   >     LEFT JOIN orders AS o
+   >         ON o.customer_id = c.customer_id
+   >     GROUP BY c.customer_id, c.first_name, c.last_name
+   > ),
+   > average_order_count AS (
+   >     SELECT AVG(order_count) AS average_orders
+   >     FROM customer_order_counts
+   > )
+   > SELECT coc.*
+   > FROM customer_order_counts AS coc
+   > CROSS JOIN average_order_count AS aoc
+   > WHERE coc.order_count > aoc.average_orders;
    > ```
 
 ---
