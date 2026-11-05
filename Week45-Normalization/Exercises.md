@@ -60,14 +60,19 @@ Sample data:
    >    name VARCHAR(250),
    >     email VARCHAR(250),
    >     city VARCHAR(250)
-   >  
-   > )
-   > CREATE TABLE supplier_products(
-   >   supplier_id INTEGER NOT NULL,
-   >   product_id INTEGER NOT NULL,
-   >  supply_price NUMERIC(10,2) NOT NULL CHECK (supplyprice >= 0),
-   >  lead_time_days TIMESTAMPTZ
-   > )
+   > );
+   >CREATE TABLE supplier_products (
+   > supplier_id INTEGER NOT NULL,
+   > product_id INTEGER NOT NULL,
+   > supply_price NUMERIC(10, 2) NOT NULL
+   >     CHECK (supply_price >= 0),
+   > lead_time_days INTEGER NOT NULL,
+   >
+   > PRIMARY KEY (supplier_id, product_id),
+   >
+   > FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id),
+   > FOREIGN KEY (product_id) REFERENCES products(product_id)
+   > );
    >
    >
    > ```
@@ -81,7 +86,7 @@ Sample data:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
+   > All previous tables allready use normalization rules.
    >
    >
    > ```
@@ -90,7 +95,7 @@ Sample data:
    > **_Your SQL_**
    >
    > ```sql
-   > -- Write your query here
+   > Because we store price of an product at the current historical moment as the price later of a product can change.
    >
    >
    > ```
