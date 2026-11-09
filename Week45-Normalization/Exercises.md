@@ -253,12 +253,12 @@ Normalize each table to 3NF. Show your work for each step.
 
 For each statement, write TRUE or FALSE and briefly explain why.
 
-1. A table with a single-column primary key can violate 2NF.
-2. If a table is in 3NF, it is automatically in 2NF.
-3. Normalization always improves query performance.
-4. Storing a customer's current address in the orders table is always a normalization violation.
-5. BCNF is stricter than 3NF — every table in BCNF is also in 3NF.
-6. Denormalization should be done before normalization to save time.
+1. A table with a single-column primary key can violate 2NF. False. A single-column primary key cannot have partial dependencies, so it cannot violate 2NF (assuming it is in 1NF).
+2. If a table is in 3NF, it is automatically in 2NF. True, because each normal form builds on the previous one.
+3. Normalization always improves query performance. False. If normalization causes to many joins it can become a problem.
+4. Storing a customer's current address in the orders table is always a normalization violation. False, because it could be done for historical record.
+5. BCNF is stricter than 3NF — every table in BCNF is also in 3NF. True, because table in rare cases cam be 3NF ,but not BCNF.
+6. Denormalization should be done before normalization to save time. False, it needs to be done later
 
 ---
 
@@ -266,9 +266,9 @@ For each statement, write TRUE or FALSE and briefly explain why.
 
 **Required**
 
-- [ ] Existing TrailShop schema reviewed and confirmed in 3NF (Task 1.2)
-- [ ] Theory review questions answered
-- [ ] True/False questions answered with a short explanation
+- [X] Existing TrailShop schema reviewed and confirmed in 3NF (Task 1.2)
+- [X] Theory review questions answered
+- [X] True/False questions answered with a short explanation
 
 **Recommended practice**
 
