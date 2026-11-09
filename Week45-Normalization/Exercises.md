@@ -136,50 +136,53 @@ Answer in your own words (2–4 sentences each):
 
 > [!NOTE]
 > **_Your Answer_**
->
+> Normalization is a proccess of splitting poorly designed tables into separate well structured ones. It solves a problem of redundancy and anomalies.
 > _(Write your answer here.)_
 
 2. Explain the difference between an insertion anomaly and a deletion anomaly, using an example.
 
 > [!NOTE]
 > **_Your Answer_**
->
-> _(Write your answer here.)_
+>  Insertion anomaly: you cannot store needed data without storing also unneded data. For example you don't have product_categories table and need to insert to new category for a product you will be forced to duplicate products name and other data for product table.
+>  Deleting anomaly: you cannot delete a row without removing data that needs to be preserved. For example product was created in suppliers table. So if you wanted to delete supplier you will also be forced to delete product data.
+> 
 
 3. What is the difference between a partial dependency and a transitive dependency?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A partial dependency is when a column depends on only part of a composite primary key (supplier_id → supplier_city), while a transitive dependency is when a column depends on another non-key column (product_id → category_id → category_name).
 
 4. State the "informal rule" for 3NF. Explain what each part means.
 
 > [!NOTE]
 > **_Your Answer_**
->
-> _(Write your answer here.)_
+>  Every non-key attribute must depend on the key, the whole key, and nothing but the key. 
+>  "the key" — the table must have a key (1NF)
+>  "the whole key" — every non-key column depends on the entire key (2NF)
+>  "nothing but the key" — no transitive dependencies (3NF)
 
 5. Why can partial dependencies only occur in tables with composite primary keys?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> Partial dependencies can only occur in tables with composite primary keys (keys made of two or more columns). If your PK is a single column, partial dependencies are impossible.
 
 6. What is BCNF, and how does it differ from 3NF? In what rare case can a table be in 3NF but not BCNF?
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> BCNF is stricter than 3NF because every determinant must be a superkey. A table can be in 3NF but not BCNF when a non-superkey determines a prime attribute.
 
 7. Give two legitimate reasons to denormalize a database.
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> For perfomance optimization to reduce huge amounts of joints. For analytical purposes.
 
 ---
 
