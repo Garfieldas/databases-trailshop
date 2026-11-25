@@ -38,11 +38,14 @@ Record your results in a table like this:
 
 | Query | Scan Type | Exec Time (ms) | Rows Removed by Filter |
 | ----- | --------- | -------------- | ---------------------- |
-| A     |           |                |                        |
-| B     |           |                |                        |
-| C     |           |                |                        |
-| D     |           |                |                        |
-| E     |           |                |                        |
+| A     | Seq Scan  | 0.025          | 10                     |
+| B     | Seq Scan  | 0.007          | 10                     |
+| C     | Seq Scan  | 0.006          | 7                      |
+| D     | Seq Scan  | 0.008          | 9                      |
+| E     | Hash Join (Seq Scan on both tables) | 0.015 | 10 (order_items) |
+
+> [!NOTE]
+> All measurements are in `indexes.sql`. My products table uses product_id as the PK (not id), so Query E joins on p.product_id = oi.product_id. The test values (order 42, customer 7, 'Trail Runner Pro 3') don't exist in my small dataset, so most queries return 0 rows — the plan and the number of rows scanned are still what matters. Times are from warm runs (the first run was slower because of caching).
 
 ### Step 2 — Create Indexes
 
@@ -74,11 +77,11 @@ Run the same five queries with `EXPLAIN ANALYZE` again. Fill in your comparison 
 
 | Query | Before Scan | Before Time (ms) | After Scan | After Time (ms) | Improvement Factor |
 | ----- | ----------- | ---------------- | ---------- | --------------- | ------------------ |
-| A     |             |                  |            |                 |                    |
-| B     |             |                  |            |                 |                    |
-| C     |             |                  |            |                 |                    |
-| D     |             |                  |            |                 |                    |
-| E     |             |                  |            |                 |                    |
+| A     | Seq Scan    | 0.025            | Index Scan (idx_product_name) | 0.027 | 0.93x |
+| B     | Seq Scan    | 0.007            | Index Scan (idx_order_item_order_id) | 0.010 | 0.70x |
+| C     | Seq Scan    | 0.006            | Index Scan (idx_orders_customer_id) | 0.005 | 1.2x |
+| D     | Seq Scan    | 0.008            | Index Scan (idx_product_categories_category_id) | 0.005 | 1.6x |
+| E     | Hash Join + Seq Scans | 0.015  | Nested Loop + Index Scans (order_items_pkey, products_pkey) | 0.012 | 1.25x |
 
 ### Step 4 — Recommendation
 
@@ -87,7 +90,7 @@ Write a paragraph (4–6 sentences) recommending which indexes to keep in produc
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> In production I would keep idx_orders_customer_id and idx_order_item_product_id, because orders and order_items are the tables that grow fastest, and both columns are foreign keys used in joins and lookups like "orders of this customer" or "how many times was this product sold". idx_order_item_order_id and idx_product_categories_category_id I would drop: they are redundant because the composite primary keys (order_id, product_id) and (category_id, product_id) already start with those columns, and Query E even used order_items_pkey instead of the new index. idx_product_name is worth keeping only if customers search products by exact name often, since products is small and mostly read, so the write overhead is low. Every extra index slows down INSERT/UPDATE, which matters most on order_items and orders where every new order writes rows. On my tiny dataset the improvements are basically zero (some even got slower), because reading 10 rows sequentially is cheaper than walking an index — the real benefit only shows when the tables have thousands of rows.
 
 ---
 
@@ -100,49 +103,58 @@ Answer the following questions in your own words. See the corresponding theory s
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> An index is a separate data structure (usually a B-tree) that stores the values of one or more columns in sorted order together with pointers to the table rows. It works like the index at the back of a book: instead of reading every page, you look up the value and jump straight to the right rows. Without an index the database has to scan the whole table for every query, which gets slow as the table grows.
 
 **Question 2** — Explain the difference between B-tree search at O(log n) and sequential scan at O(n). If a table has 1,000,000 rows, approximately how many comparisons does each approach need? (See Theory Section 2)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A sequential scan checks every row one by one, so the work grows linearly with the table size — O(n). A B-tree is a balanced sorted tree, so each step cuts the search space down a lot and the work grows only logarithmically — O(log n). For 1,000,000 rows a sequential scan needs up to 1,000,000 comparisons, while a B-tree search needs about log₂(1,000,000) ≈ 20 comparisons (in practice even fewer page reads, because each B-tree node holds many keys, so the tree is only 3–4 levels deep).
 
 **Question 3** — PostgreSQL automatically creates indexes on primary keys. Why doesn't it also auto-index foreign key columns? (See Theory Section 3)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A primary key must be unique, and PostgreSQL needs an index to check uniqueness fast, so it creates one automatically. A foreign key has no such requirement — the check is done on the referenced table's primary key, which is already indexed. Whether an index on the FK column is useful depends on how you query the data (joins, lookups, deletes on the parent table), and every index costs storage and slows down writes, so PostgreSQL leaves that decision to the developer. Also, the FK column may already be covered by another index, like the composite PK in order_items (order_id, product_id).
 
 **Question 4** — What is the difference between an Index Scan and an Index Only Scan? When can PostgreSQL use Index Only Scan? (See Theory Section 4)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> In an Index Scan PostgreSQL finds matching entries in the index and then goes to the table (heap) to fetch the full row for each match. In an Index Only Scan all the columns the query needs are already stored in the index, so it doesn't have to visit the table at all, which is faster. It can be used when every selected and filtered column is part of the index (or added with `INCLUDE`), and when the visibility map says the pages are all-visible (after VACUUM), so PostgreSQL doesn't need to check the heap for row visibility.
 
 **Question 5** — Give three situations where you should NOT create an index. Explain each briefly. (See Theory Section 5)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> 1. **Very small tables** — like my TrailShop tables with ~10 rows; a sequential scan reads the whole table in one page, so an index adds overhead without any gain.
+> 2. **Columns with low selectivity** — e.g. a boolean or status with only a few values; if a query returns a big part of the table, PostgreSQL will choose a Seq Scan anyway.
+> 3. **Write-heavy tables / rarely queried columns** — every INSERT, UPDATE and DELETE must also update every index, so indexing columns that are never used in WHERE, JOIN or ORDER BY only slows down writes and wastes disk space.
 
 **Question 6** — What does `EXPLAIN ANALYZE` show that plain `EXPLAIN` does not? Why does this matter? (See Theory Section 6)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> Plain `EXPLAIN` only shows the plan and the planner's estimates (cost and estimated rows) without running the query. `EXPLAIN ANALYZE` actually executes the query and adds the real numbers: actual time for each step, actual rows, loops, rows removed by filter, and total planning/execution time. This matters because estimates can be wrong (e.g. outdated statistics), and only by comparing estimated vs actual rows and real timings can you see where the query is really slow and whether an index actually helps.
 
 **Question 7** — What is a partial index? Give one concrete example where a partial index on a TrailShop table would be useful. (See Theory Section 7)
 
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> A partial index is an index with a `WHERE` condition, so it only contains the rows that match that condition. It is smaller and faster to maintain than a full index, and works well when queries always target the same subset of rows. Example in TrailShop: the warehouse often looks up orders that still need to be processed, which is a small part of all orders:
+>
+> ```sql
+> CREATE INDEX idx_orders_pending_customer ON orders (customer_id)
+> WHERE status = 'pending';
+> ```
+>
+> Queries like `SELECT * FROM orders WHERE status = 'pending' AND customer_id = 5;` can use it, while delivered/cancelled orders (the majority over time) don't take any space in the index.
 
 **Question 8** — What is the leftmost prefix rule for multi-column indexes? If you create `CREATE INDEX idx ON orders (customer_id, order_date)`, which of the following queries can use the index and why?
 
@@ -160,7 +172,11 @@ SELECT * FROM orders WHERE customer_id = 5 AND order_date = '2026-01-15';
 > [!NOTE]
 > **_Your Answer_**
 >
-> _(Write your answer here.)_
+> In a multi-column index the rows are sorted first by the first column, then by the second inside each first-column value, and so on — like a phone book sorted by last name, then first name. Because of this the index can only be used if the query filters on the leftmost column(s) of the index.
+>
+> - **a)** Yes — customer_id is the leftmost column, so the index can find all rows for customer 5.
+> - **b)** No (not efficiently) — order_date is the second column; without customer_id the dates are scattered across the whole index, so PostgreSQL will most likely do a Seq Scan.
+> - **c)** Yes — both columns are used, matching the full index, so it finds exactly the rows for customer 5 on that date. This is the best case for this index.
 
 ---
 
@@ -508,11 +524,11 @@ CREATE INDEX idx_orders_pending ON orders (status) WHERE status = 'pending';
 
 **Required**
 
-- [ ] Baseline measurements for all 5 project queries
-- [ ] All 5 indexes created and re-measured
-- [ ] Comparison table filled with before/after data
-- [ ] Recommendation paragraph written
-- [ ] All 8 theory questions answered
+- [x] Baseline measurements for all 5 project queries
+- [x] All 5 indexes created and re-measured
+- [x] Comparison table filled with before/after data
+- [x] Recommendation paragraph written
+- [x] All 8 theory questions answered
 
 **Recommended practice**
 
